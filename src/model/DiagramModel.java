@@ -1,6 +1,7 @@
 package model;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DiagramModel {
     private List<Block> blocks = new ArrayList<>();
@@ -20,5 +21,13 @@ public class DiagramModel {
 
     public List<Connection> getConnections() {
         return connections;
+    }
+
+    public void setBlocks(List<Block> blocks) {
+        this.blocks = blocks;
+    }
+
+    public void setConnections(List<Connection> connections) {
+        this.connections = connections;
     }
 }

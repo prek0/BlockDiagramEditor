@@ -1,18 +1,34 @@
 package view;
 
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JPanel;
+
 import model.Block;
 import model.Connection;
 import model.DiagramModel;
 
-import javax.swing.*;
-import java.awt.*;
-
 public class DiagramView extends JPanel {
     private DiagramModel model;
+    private JButton saveButton;
+    private JButton loadButton;
 
     public DiagramView(DiagramModel model) {
         this.model = model;
         setPreferredSize(new Dimension(800, 600));
+        setLayout(new BorderLayout());
+
+        // Add toolbar with Save and Load buttons
+        JPanel toolbar = new JPanel();
+        saveButton = new JButton("Save");
+        loadButton = new JButton("Load");
+        toolbar.add(saveButton);
+        toolbar.add(loadButton);
+        add(toolbar, BorderLayout.NORTH);
     }
 
     @Override
@@ -36,5 +52,14 @@ public class DiagramView extends JPanel {
 
     private Block getBlockById(int id) {
         return model.getBlocks().stream().filter(b -> b.id == id).findFirst().orElse(null);
+    }
+
+    // Hook external controller actions
+    public void setSaveAction(ActionListener l) {
+        saveButton.addActionListener(l);
+    }
+
+    public void setLoadAction(ActionListener l) {
+        loadButton.addActionListener(l);
     }
 }
