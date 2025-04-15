@@ -1,4 +1,4 @@
-package view;
+package com.myapp.editor.view;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -8,9 +8,9 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-import model.Block;
-import model.Connection;
-import model.DiagramModel;
+import com.myapp.editor.model.Block;
+import com.myapp.editor.model.Connection;
+import com.myapp.editor.model.DiagramModel;
 
 public class DiagramView extends JPanel {
     private DiagramModel model;

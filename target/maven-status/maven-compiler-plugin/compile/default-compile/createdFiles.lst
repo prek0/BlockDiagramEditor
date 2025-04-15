@@ -1,0 +1,6 @@
+com/myapp/editor/controller/DiagramController.class
+com/myapp/editor/model/DiagramModel.class
+com/myapp/editor/model/Connection.class
+com/myapp/editor/view/DiagramView.class
+com/myapp/editor/Main.class
+com/myapp/editor/model/Block.class

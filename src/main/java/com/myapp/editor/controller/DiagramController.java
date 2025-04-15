@@ -1,9 +1,10 @@
-package controller;
+package com.myapp.editor.controller;
 
-import model.Block;
-import model.Connection;
-import model.DiagramModel;
-import view.DiagramView;
+import com.myapp.editor.model.Block;
+import com.myapp.editor.model.Connection;
+import com.myapp.editor.model.DiagramModel;
+
+import com.myapp.editor.view.DiagramView;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;

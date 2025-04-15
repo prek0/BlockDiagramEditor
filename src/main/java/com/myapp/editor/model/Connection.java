@@ -1,4 +1,4 @@
-package model;
+package com.myapp.editor.model;
 
 public class Connection {
     public int fromId;
