@@ -1,6 +1,12 @@
 /Users/preksha/clg_sem6/OOAD/proj_MVC/BlockDiagramEditor/src/main/java/com/myapp/editor/Main.java
 /Users/preksha/clg_sem6/OOAD/proj_MVC/BlockDiagramEditor/src/main/java/com/myapp/editor/controller/DiagramController.java
 /Users/preksha/clg_sem6/OOAD/proj_MVC/BlockDiagramEditor/src/main/java/com/myapp/editor/model/Block.java
-/Users/preksha/clg_sem6/OOAD/proj_MVC/BlockDiagramEditor/src/main/java/com/myapp/editor/model/Connection.java
+/Users/preksha/clg_sem6/OOAD/proj_MVC/BlockDiagramEditor/src/main/java/com/myapp/editor/model/Connector.java
+/Users/preksha/clg_sem6/OOAD/proj_MVC/BlockDiagramEditor/src/main/java/com/myapp/editor/model/DiagramElement.java
 /Users/preksha/clg_sem6/OOAD/proj_MVC/BlockDiagramEditor/src/main/java/com/myapp/editor/model/DiagramModel.java
+/Users/preksha/clg_sem6/OOAD/proj_MVC/BlockDiagramEditor/src/main/java/com/myapp/editor/model/TextElement.java
+/Users/preksha/clg_sem6/OOAD/proj_MVC/BlockDiagramEditor/src/main/java/com/myapp/editor/model/usecase/ActorElement.java
+/Users/preksha/clg_sem6/OOAD/proj_MVC/BlockDiagramEditor/src/main/java/com/myapp/editor/model/usecase/SystemBoundary.java
+/Users/preksha/clg_sem6/OOAD/proj_MVC/BlockDiagramEditor/src/main/java/com/myapp/editor/model/usecase/UseCaseElement.java
+/Users/preksha/clg_sem6/OOAD/proj_MVC/BlockDiagramEditor/src/main/java/com/myapp/editor/view/DiagramPanel.java
 /Users/preksha/clg_sem6/OOAD/proj_MVC/BlockDiagramEditor/src/main/java/com/myapp/editor/view/DiagramView.java

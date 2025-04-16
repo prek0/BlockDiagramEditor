@@ -1,33 +1,33 @@
-package com.myapp.editor.model;
+package model;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class DiagramModel {
-    private List<Block> blocks = new ArrayList<>();
-    private List<Connection> connections = new ArrayList<>();
+    private List<DiagramElement> elements = new ArrayList<>();
+    private List<Connector> connectors = new ArrayList<>();
 
-    public void addBlock(Block block) {
-        blocks.add(block);
+    public void addElement(DiagramElement element) {
+        elements.add(element);
     }
 
-    public void addConnection(Connection connection) {
-        connections.add(connection);
+    public void addConnector(Connector connector) {
+        connectors.add(connector);
     }
 
-    public List<Block> getBlocks() {
-        return blocks;
+    public List<DiagramElement> getElements() {
+        return elements;
     }
 
-    public List<Connection> getConnections() {
-        return connections;
+    public List<Connector> getConnectors() {
+        return connectors;
     }
 
-    public void setBlocks(List<Block> blocks) {
-        this.blocks = blocks;
+    public void setElements(List<DiagramElement> elements) {
+        this.elements = elements;
     }
 
-    public void setConnections(List<Connection> connections) {
-        this.connections = connections;
+    public void setConnectors(List<Connector> connectors) {
+        this.connectors = connectors;
     }
 }

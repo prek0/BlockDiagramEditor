@@ -1,4 +1,4 @@
-package com.myapp.editor.model;
+package model;
 
 public class Block {
     public int id;
