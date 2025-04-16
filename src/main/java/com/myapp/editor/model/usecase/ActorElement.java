@@ -5,6 +5,8 @@ import model.*;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Shape;
+import java.awt.geom.Rectangle2D;
 
 public class ActorElement extends DiagramElement {
     // Base dimensions used for scaling actor parts
@@ -77,4 +79,11 @@ public class ActorElement extends DiagramElement {
         return px >= x + width - handleSize && px <= x + width &&
                py >= y + height - handleSize && py <= y + height;
     }
+
+    @Override
+    public Shape getShape() {
+        return new Rectangle2D.Double(x, y, width, height); // Or adjust to match visual bounds
+    }
+
+
 }

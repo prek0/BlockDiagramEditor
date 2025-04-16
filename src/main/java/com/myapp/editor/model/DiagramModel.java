@@ -6,6 +6,7 @@ import java.util.List;
 public class DiagramModel {
     private List<DiagramElement> elements = new ArrayList<>();
     private List<Connector> connectors = new ArrayList<>();
+    private int nextId = 1;  
 
     public void addElement(DiagramElement element) {
         elements.add(element);
@@ -29,5 +30,9 @@ public class DiagramModel {
 
     public void setConnectors(List<Connector> connectors) {
         this.connectors = connectors;
+    }
+
+    public int getNextId() {
+        return nextId++;
     }
 }

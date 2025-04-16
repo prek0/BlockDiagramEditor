@@ -24,7 +24,7 @@ public class Main {
             List<Connector> connectors = model.getConnectors();
 
             // Create the controller and pass the view and the elements/connectors
-            new DiagramController(model, view, elements, connectors);
+            DiagramController controller = new DiagramController(model, view, elements, connectors);
 
             // Create and set up the JFrame
             JFrame frame = new JFrame("Block Diagram Editor");

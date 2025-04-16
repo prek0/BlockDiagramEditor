@@ -20,14 +20,59 @@ public abstract class DiagramElement implements Serializable {
     }
 
     public abstract void draw(Graphics g);
-    
-    public boolean contains(int px, int py) {
-        return px >= x && px <= x + width && py >= y && py <= y + height;
-    }
+    public abstract Shape getShape();
+
+    public boolean contains(Point p) {
+        return new Rectangle(x, y, width, height).contains(p);
+    }     
+
+    // public boolean contains(int px, int py) {
+    //     return px >= x && px <= x + width && py >= y && py <= y + height;
+    // }
 
     public boolean onResizeHandle(int px, int py) {
         int handleSize = 10;
         return px >= x + width - handleSize && px <= x + width &&
                py >= y + height - handleSize && py <= y + height;
     }
+
+    public void setPosition(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    public int getX() { return x; }
+    public int getY() { return y; }
+    public void setX(int x) {
+        this.x = x;
+    }
+    
+    public void setY(int y) {
+        this.y = y;
+    }
+    public void setSelected(boolean selected) {
+        this.selected = selected;
+    }
+
+    public void setWidth(int width) {
+        this.width = width;
+    }
+    
+    public void setHeight(int height) {
+        this.height = height;
+    }
+
+    public boolean isSelected() {
+        return selected;
+    }
+    public String getText() { return text; }
+    public void setText(String text) { this.text = text; }
+
+    public boolean isOnResizeHandle(Point p) {
+        int handleSize = 10;
+        int handleX = x + width - handleSize;
+        int handleY = y + height - handleSize;
+        return new Rectangle(handleX, handleY, handleSize, handleSize).contains(p);
+    }
+    
 }

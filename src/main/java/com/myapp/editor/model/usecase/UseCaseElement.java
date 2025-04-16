@@ -4,10 +4,12 @@ import model.*;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Shape;
+import java.awt.geom.Ellipse2D;
 
 public class UseCaseElement extends DiagramElement {
     public UseCaseElement(int x, int y, String text, int id) {
-        super(x, y, text, 120, 80, id); // Use the constructor with width and height (120, 80)
+        super(x, y, text, 120, 80, id);
     }
 
     @Override
@@ -22,7 +24,13 @@ public class UseCaseElement extends DiagramElement {
         }
 
         g.setColor(Color.RED);
-        g.fillRect(x + width - 10, y + height - 10, 10, 10); // Resize handle
+        g.fillRect(x + width - 10, y + height - 10, 10, 10); 
         g.setColor(Color.BLACK);
     }
+
+    @Override
+    public Shape getShape() {
+        return new Ellipse2D.Double(x, y, width, height);
+    }
+
 }

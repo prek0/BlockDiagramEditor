@@ -2,6 +2,8 @@ package model;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Shape;
+import java.awt.geom.Rectangle2D;
 
 public class TextElement extends DiagramElement {
     public TextElement(int x, int y, String text, int id) {
@@ -16,5 +18,10 @@ public class TextElement extends DiagramElement {
             g.drawRect(x - 2, y - 2, width + 4, height + 4);
             g.setColor(Color.BLACK);
         }
+    }
+
+    @Override
+    public Shape getShape() {
+        return new Rectangle2D.Double(x, y, width, height); 
     }
 }
