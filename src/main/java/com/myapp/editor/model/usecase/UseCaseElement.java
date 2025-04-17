@@ -33,4 +33,8 @@ public class UseCaseElement extends DiagramElement {
         return new Ellipse2D.Double(x, y, width, height);
     }
 
+    @Override
+    public String getType() {
+        return "Use Case";
+    }
 }

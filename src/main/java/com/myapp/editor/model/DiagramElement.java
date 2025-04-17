@@ -68,11 +68,20 @@ public abstract class DiagramElement implements Serializable {
     public String getText() { return text; }
     public void setText(String text) { this.text = text; }
 
+    public abstract String getType();
+
     public boolean isOnResizeHandle(Point p) {
         int handleSize = 10;
         int handleX = x + width - handleSize;
         int handleY = y + height - handleSize;
         return new Rectangle(handleX, handleY, handleSize, handleSize).contains(p);
     }
-    
+    @Override
+    public DiagramElement clone() {
+        try {
+            return (DiagramElement) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError("Cloning not supported", e);
+        }
+    }
 }

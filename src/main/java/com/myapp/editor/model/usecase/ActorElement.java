@@ -85,5 +85,8 @@ public class ActorElement extends DiagramElement {
         return new Rectangle2D.Double(x, y, width, height); // Or adjust to match visual bounds
     }
 
-
+    @Override
+    public String getType() {
+        return "Actor";
+    }
 }

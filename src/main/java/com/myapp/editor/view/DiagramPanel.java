@@ -3,6 +3,9 @@ package view;
 import model.*;
 
 import javax.swing.*;
+
+import controller.DiagramController;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.util.List;
@@ -14,6 +17,8 @@ public class DiagramPanel extends JPanel {
     private DiagramElement selectedElement = null;
     private Point dragOffset = null;
     private boolean resizing = false;
+    private DiagramController controller;
+    private int originalX, originalY;
 
     public DiagramPanel(List<DiagramElement> elements, List<Connector> connectors) {
         this.elements = elements;
@@ -30,13 +35,17 @@ public class DiagramPanel extends JPanel {
                     if (el.isOnResizeHandle(e.getPoint())) {
                         selectedElement = el;
                         resizing = true;
-                        dragOffset = e.getPoint(); // For tracking size change
+                        dragOffset = e.getPoint();
                         el.setSelected(true);
                         break;
                     } else if (el.contains(e.getPoint())) {
                         selectedElement = el;
                         resizing = false;
                         dragOffset = new Point(e.getX() - el.getX(), e.getY() - el.getY());
+            
+                        originalX = el.getX();
+                        originalY = el.getY();
+            
                         el.setSelected(true);
                     } else {
                         el.setSelected(false);
@@ -47,10 +56,20 @@ public class DiagramPanel extends JPanel {
 
             @Override
             public void mouseReleased(MouseEvent e) {
+                if (selectedElement != null && dragOffset != null && !resizing && controller != null) {
+                    int newX = selectedElement.getX();
+                    int newY = selectedElement.getY();
+            
+                    if (originalX != newX || originalY != newY) {
+                        controller.elementMoved(selectedElement, originalX, originalY, newX, newY);
+                    }
+                }
+            
                 selectedElement = null;
                 dragOffset = null;
                 resizing = false;
             }
+
         });
 
         // Mouse drag
@@ -77,12 +96,18 @@ public class DiagramPanel extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        for (DiagramElement el : elements) {
-            el.draw(g);
+        // Draw connectors first
+        for (Connector connector : connectors) {
+            connector.draw(g);
         }
 
-        for (Connector c : connectors) {
-            c.draw(g);
+        // Draw elements
+        for (DiagramElement element : elements) {
+            element.draw(g);
         }
+    }
+
+    public void setController(DiagramController controller) {
+        this.controller = controller;
     }
 }

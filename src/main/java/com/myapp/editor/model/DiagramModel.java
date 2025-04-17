@@ -8,6 +8,11 @@ public class DiagramModel {
     private List<Connector> connectors = new ArrayList<>();
     private int nextId = 1;  
 
+    public DiagramModel() {
+        elements = new ArrayList<>();
+        connectors = new ArrayList<>();
+    }
+
     public void addElement(DiagramElement element) {
         elements.add(element);
     }
@@ -34,5 +39,13 @@ public class DiagramModel {
 
     public int getNextId() {
         return nextId++;
+    }
+
+     public void removeElement(DiagramElement element) {
+        elements.remove(element);
+    }
+
+    public void removeConnector(Connector connector) {
+        connectors.remove(connector);
     }
 }

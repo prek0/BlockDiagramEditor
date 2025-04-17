@@ -29,4 +29,9 @@ public class ParallelogramElement extends DiagramElement {
     public Shape getShape() {
         return new Rectangle2D.Double(x, y, width, height); 
     }
+
+    @Override
+    public String getType() {
+        return "Parallelogram";
+    }
 }
