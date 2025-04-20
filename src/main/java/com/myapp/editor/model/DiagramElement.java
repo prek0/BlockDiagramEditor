@@ -74,6 +74,17 @@ public abstract class DiagramElement implements Serializable {
     public String getText() { return text; }
     public void setText(String text) { this.text = text; }
 
+    public int getCenterX() {
+        return getX() + getWidth() / 2;
+    }
+    public int getCenterY() {
+        return getY() + getHeight() / 2;
+    }        
+    public Point getCenter() {
+        return new Point(getX() + getWidth() / 2, getY() + getHeight() / 2);
+    }
+    
+
     public abstract String getType();
 
     public boolean isOnResizeHandle(Point p) {

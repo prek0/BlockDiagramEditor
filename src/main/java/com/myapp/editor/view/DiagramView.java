@@ -50,6 +50,9 @@ public class DiagramView extends JPanel {
     private JButton enumButton;
     private JButton packageButton;
 
+    //connector 
+    private JButton connectorButton;  
+
     public DiagramView(DiagramModel model) {
         this.model = model;
         setPreferredSize(new Dimension(800, 600));
@@ -155,6 +158,18 @@ public class DiagramView extends JPanel {
     stateDiagramOptionsPanel.setVisible(false);
     leftPanel.add(stateDiagramOptionsPanel);
 
+    // -------- Connector Button --------
+    connectorButton = new JButton("Connector");
+    connectorButton.setAlignmentX(Component.LEFT_ALIGNMENT);
+    leftPanel.add(connectorButton);
+
+    // Show Use Case panel on model selection
+    modelSelector.addActionListener(e -> {
+        String selected = (String) modelSelector.getSelectedItem();
+        revalidate();
+        repaint();
+    });
+    
     // -------- General Options --------
     generalButton = new JButton("General");
     generalButton.setAlignmentX(Component.LEFT_ALIGNMENT);

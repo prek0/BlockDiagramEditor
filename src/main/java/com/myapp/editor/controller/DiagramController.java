@@ -192,7 +192,12 @@ public class DiagramController {
         Command moveCommand = new MoveElementCommand(element, oldX, oldY, newX, newY);
         commandManager.executeCommand(moveCommand);
     }
-    
+
+    public Connector connectorCreated(DiagramElement source, DiagramElement destination) {
+        Connector connector = new Connector(source, destination);
+        connectors.add(connector);
+        return connector;
+    }
     
     // Method to add elements
     public void addElement(String type) {

@@ -8,11 +8,11 @@ import com.myapp.editor.controller.DiagramController;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class DiagramPanel extends JPanel {
     private List<DiagramElement> elements;
-    private List<Connector> connectors;
 
     private DiagramElement selectedElement = null;
     private Point dragOffset = null;
@@ -28,6 +28,13 @@ public class DiagramPanel extends JPanel {
     private boolean draggingGroup = false;
     private final SelectionManager selectionManager = new SelectionManager();
     private final GroupManager groupManager = new GroupManager();
+
+    //connector
+    private DiagramElement connectorSource = null;
+    private boolean drawingConnector = false;
+    private Point currentMousePoint = null;
+    private List<Connector> connectors = new ArrayList<>();
+
 
     public DiagramPanel(List<DiagramElement> elements, List<Connector> connectors) {
         this.elements = elements;
@@ -112,9 +119,17 @@ public class DiagramPanel extends JPanel {
                     dragStart = e.getPoint();
                 }
 
-                // 4) right-click to ungroup
-                if (SwingUtilities.isRightMouseButton(e)) {
-                    groupManager.ungroupAt(e.getX(), e.getY());
+                // 4) start connector drawing (Shift + left click on element)
+                if (SwingUtilities.isLeftMouseButton(e) && e.isShiftDown()) {
+                    for (DiagramElement el : elements) {
+                        if (el.contains(e.getPoint())) {
+                            connectorSource = el;
+                            drawingConnector = true;
+                            dragStart = e.getPoint();
+                            repaint();
+                            return;
+                        }
+                    }
                 }
 
                 repaint();
@@ -160,6 +175,27 @@ public class DiagramPanel extends JPanel {
                 resizing = false;
                 dragStart = null;
 
+                // 5) finish connector drawing
+                if (drawingConnector && connectorSource != null) {
+                    for (DiagramElement el : elements) {
+                        if (el.contains(e.getPoint()) && el != connectorSource) {
+                            if (controller != null) {
+                                Connector conn = controller.connectorCreated(connectorSource, el);
+                                if (conn != null) {
+                                    connectors.add(conn);
+                                }
+                            }
+                            break;
+                        }
+                    }
+                    drawingConnector = false;
+                    connectorSource = null;
+                    dragStart = null;
+                    repaint();
+                }
+
+
+
                 repaint();
             }
 
@@ -168,27 +204,47 @@ public class DiagramPanel extends JPanel {
         // Mouse drag
         addMouseMotionListener(new MouseMotionAdapter() {
             @Override
-           
             public void mouseDragged(MouseEvent e) {
-                // rubber-band dragging
+                // 1. drawing a connector should have highest priority
+                if (drawingConnector && dragStart != null) {
+                    currentMousePoint = e.getPoint(); 
+                    repaint();
+                    return;
+                }
+
+                // 2. resizing an element
+                if (resizing && selectedElement != null && dragOffset != null) {
+                    int newWidth = Math.max(10, e.getX() - selectedElement.getX()); 
+                    int newHeight = Math.max(10, e.getY() - selectedElement.getY());
+                    selectedElement.setWidth(newWidth);
+                    selectedElement.setHeight(newHeight);
+                    repaint();
+                    return;
+                }
+
+                // 3. rubber-band selecting
                 if (rubberBandSelecting && dragStart != null) {
                     int x = Math.min(dragStart.x, e.getX());
                     int y = Math.min(dragStart.y, e.getY());
                     int w = Math.abs(e.getX() - dragStart.x);
                     int h = Math.abs(e.getY() - dragStart.y);
                     selectionRect = new Rectangle(x, y, w, h);
+                    repaint();
+                    return;
+                }
 
-                // dragging a grouped box
-                } else if (draggingGroup) {
+                // 4. dragging a grouped box
+                if (draggingGroup) {
                     int dx = e.getX() - dragStart.x;
                     int dy = e.getY() - dragStart.y;
                     activeGroup.move(dx, dy);
                     dragStart = e.getPoint();
                     repaint();
                     return;
+                }
 
-                // dragging individual selection
-                } else if (selectionManager.hasSelection() && dragStart != null) {
+                // 5. dragging individual selection
+                if (selectionManager.hasSelection() && dragStart != null) {
                     int dx = e.getX() - dragStart.x;
                     int dy = e.getY() - dragStart.y;
                     for (DiagramElement el : selectionManager.getSelected()) {
@@ -198,9 +254,11 @@ public class DiagramPanel extends JPanel {
                     DiagramGroup grp = groupManager.findGroup(selectionManager.getSelected());
                     if (grp != null) grp.move(dx, dy);
                     dragStart = e.getPoint();
+                    repaint();
                 }
-                repaint();
             }
+
+
 
         });
 
@@ -236,24 +294,59 @@ public class DiagramPanel extends JPanel {
         repaint();
     }
 
+    // @Override
+    // protected void paintComponent(Graphics g) {
+    //     super.paintComponent(g);
+    //     Graphics2D g2 = (Graphics2D) g;
+    //     // draw elements
+    //     for (DiagramElement el : elements) el.draw(g2);
+    //     // draw connectors
+    //     for (Connector c : connectors) c.draw(g2);
+    //     // draw rubber-band
+    //     if (selectionRect != null) {
+    //         g2.setColor(new Color(0, 0, 255, 50));
+    //         g2.fill(selectionRect);
+    //         g2.setColor(Color.BLUE);
+    //         g2.draw(selectionRect);
+    //     }
+    //     // draw temporary connector
+    //     if (drawingConnector && connectorSource != null && dragStart != null) {
+    //         g2.setColor(Color.BLACK);
+    //         g2.setStroke(new BasicStroke(1.5f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND, 0, new float[]{5, 5}, 0));
+    //         g2.drawLine(connectorSource.getCenterX(), connectorSource.getCenterY(), dragStart.x, dragStart.y);
+    //     }
+    // }
     @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        Graphics2D g2 = (Graphics2D) g;
-        // draw elements
-        for (DiagramElement el : elements) el.draw(g2);
-        // draw connectors
-        for (Connector c : connectors) c.draw(g2);
-        // draw rubber-band
-        if (selectionRect != null) {
-            g2.setColor(new Color(0, 0, 255, 50));
-            g2.fill(selectionRect);
-            g2.setColor(Color.BLUE);
-            g2.draw(selectionRect);
-        }
-        // // draw groups
-        // groupManager.drawAll(g2);
+protected void paintComponent(Graphics g) {
+    super.paintComponent(g);
+
+    Graphics2D g2d = (Graphics2D) g;
+
+    // 1. draw all elements
+    for (DiagramElement el : elements) {
+        el.draw(g2d);
     }
+
+    // 2. draw all connectors
+    for (Connector c : connectors) {
+        c.draw(g2d);
+    }
+
+    // 3. draw selection rectangle
+    if (rubberBandSelecting && selectionRect != null) {
+        g2d.setColor(Color.BLUE);
+        g2d.draw(selectionRect);
+    }
+
+    // 4. draw dragging connector if in progress
+    if (drawingConnector && connectorSource != null && currentMousePoint != null) {
+        g2d.setColor(Color.GRAY);
+        g2d.setStroke(new BasicStroke(2));
+        Point start = connectorSource.getCenter(); // your element should have a getCenter()
+        g2d.drawLine(start.x, start.y, currentMousePoint.x, currentMousePoint.y);
+    }
+}
+
 
     public void setController(DiagramController controller) {
         this.controller = controller;
