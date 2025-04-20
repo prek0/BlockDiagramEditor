@@ -1,10 +1,9 @@
 // SelectionManager.java
-package com.myapp.editor.view;
+package com.myapp.editor.model;
 
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
-import com.myapp.editor.model.DiagramElement;
 
 public class SelectionManager {
     private final Set<DiagramElement> selected = new HashSet<>();

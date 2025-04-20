@@ -1,12 +1,11 @@
 
 // DiagramGroup.java
-package com.myapp.editor.view;
+package com.myapp.editor.model;
 
 import java.awt.Rectangle;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
-import com.myapp.editor.model.DiagramElement;
 
 public class DiagramGroup {
     private final Set<DiagramElement> members = new HashSet<>();

@@ -1,6 +1,5 @@
-package com.myapp.editor.view;
+package com.myapp.editor.model;
 
-import com.myapp.editor.model.DiagramElement;
 import java.awt.Graphics2D;
 import java.awt.BasicStroke;
 import java.awt.Color;

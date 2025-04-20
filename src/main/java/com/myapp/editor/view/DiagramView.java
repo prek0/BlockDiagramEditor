@@ -210,6 +210,7 @@ public class DiagramView extends JPanel {
     add(leftPanel, BorderLayout.WEST);
 
     // -------- Diagram Panel --------
+    
     diagramPanel = new DiagramPanel(model.getElements(), model.getConnectors());
     add(diagramPanel, BorderLayout.CENTER);
     }
