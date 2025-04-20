@@ -35,6 +35,15 @@ public class DiagramController {
     private CommandManager commandManager; 
     private DiagramElement selectedElement;
     private DiagramElement copiedElement;
+    private String text = "";
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
 
     public DiagramController(DiagramModel model, DiagramView view, List<DiagramElement> elements, List<Connector> connectors) {
         this.model = model;
@@ -103,11 +112,37 @@ public class DiagramController {
         view.getRectangleButton().addActionListener(e -> addElement("Rectangle"));
         view.getTriangleButton().addActionListener(e -> addElement("Triangle"));
 
+        view.getInitialStateButton().addActionListener(e -> addElement("InitialState"));
+        view.getFinalStateButton().addActionListener(e -> addElement("FinalState"));
+        view.getStateElementButton().addActionListener(e -> addElement("State"));
+        view.getDecisionButton().addActionListener(e -> addElement("Decision"));
+
         view.getClassButton().addActionListener(e -> addElement("ClassBox"));
         view.getInterfaceButton().addActionListener(e -> addElement("InterfaceBox"));
         view.getAbstractClassButton().addActionListener(e -> addElement("AbstractBox"));
         view.getEnumButton().addActionListener(e -> addElement("Enum"));
         view.getPackageButton().addActionListener(e -> addElement("packageBox"));
+
+        // Handle the "Text" button click (Predefined text placement)
+        view.getTextButton().addActionListener(e -> {
+            // Prompt user for the text input
+            String labelText = JOptionPane.showInputDialog(view, "Enter text for the element:", "Text Element", JOptionPane.PLAIN_MESSAGE);
+
+            if (labelText != null && !labelText.trim().isEmpty()) {
+                labelText = labelText.trim();
+
+                // Default position or allow custom position
+                int x = 50; // default X position
+                int y = 50; // default Y position
+
+                // Create a text element at the predefined position
+                DiagramElement textElement = elementFactory.createElement("Text", x, y, labelText);  
+
+                // Add the text element to the model and update the view
+                model.addElement(textElement);
+                view.getDiagramPanel().repaint();
+            }
+        });
 
 
         view.getDiagramPanel().addMouseListener(new MouseAdapter() {
@@ -141,12 +176,13 @@ public class DiagramController {
     public void addElement(String type) {
         int x = elementFactory.randomX();
         int y = elementFactory.randomY();
-        
-        DiagramElement element = elementFactory.createElement(type, x, y);
+
+        String labelText = JOptionPane.showInputDialog(view, "Enter text for the element:", "Element Label", JOptionPane.PLAIN_MESSAGE);     
+        DiagramElement element = elementFactory.createElement(type, x, y, labelText);
 
         // Create the AddElementCommand and execute it using CommandManager
         Command addElementCommand = new AddElementCommand(model, element, view);
-        commandManager.executeCommand(addElementCommand);  // This should now work without the NullPointerException
+        commandManager.executeCommand(addElementCommand);  
 
         view.getDiagramPanel().repaint();
     }

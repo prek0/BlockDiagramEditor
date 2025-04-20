@@ -7,6 +7,10 @@ import com.myapp.editor.model.general.HexagonElement;
 import com.myapp.editor.model.general.ParallelogramElement;
 import com.myapp.editor.model.general.RectangleElement;
 import com.myapp.editor.model.general.TriangleElement;
+import com.myapp.editor.model.state.DecisionStateElement;
+import com.myapp.editor.model.state.FinalStateElement;
+import com.myapp.editor.model.state.InitialStateElement;
+import com.myapp.editor.model.state.StateElement;
 import com.myapp.editor.model.usecase.UseCaseElement;
 import com.myapp.editor.model.usecase.ActorElement;
 import com.myapp.editor.model.usecase.SystemBoundary;
@@ -20,7 +24,7 @@ public class ElementFactory {
     }
 
     // Method to create elements
-    public DiagramElement createElement(String type, int x, int y) {
+    public DiagramElement createElement(String type, int x, int y, String text) {
         int id = model.getNextId(); // Generate id once for consistency
 
         switch (type) {
@@ -52,6 +56,18 @@ public class ElementFactory {
                 return new EnumBox(x, y, "Enum", 150, 200, id);
             case "packageBox":
                 return new PackageBox(x, y, "Package", 150, 200, id);
+            case "InitialState":  
+                return new InitialStateElement(x, y, id);
+            case "FinalState":    
+                return new FinalStateElement(x, y, id);
+            case "State":         
+                return new StateElement(x, y, "State", 150, 80, id);
+            case "Decision":      
+                return new DecisionStateElement(x, y, 80, id);
+            
+            // Add case for Text element
+            case "Text":
+                return new TextElement(x, y, text, id);
             default:
                 throw new IllegalArgumentException("Unknown element type: " + type);
         }
@@ -72,8 +88,8 @@ public class ElementFactory {
         int newX = original.getX() + 20;
         int newY = original.getY() + 20;
     
-        DiagramElement clone = createElement(type, newX, newY);
-        clone.setText(original.getText() + " Copy");
+        DiagramElement clone = createElement(type, newX, newY, original.getText());
+        clone.setText(original.getText());
         return clone;
     }
 

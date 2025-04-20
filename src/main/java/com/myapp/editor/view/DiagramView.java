@@ -34,6 +34,14 @@ public class DiagramView extends JPanel {
     private JButton parallelogramButton;
     private JButton rectangleButton;
     private JButton triangleButton;
+    private JButton textButton;
+
+    // State Diagram
+    private JPanel stateDiagramOptionsPanel;
+    private JButton initialStateButton;
+    private JButton finalStateButton;
+    private JButton stateElementButton;
+    private JButton decisionButton;
 
     private JPanel classDiagramOptionsPanel;
     private JButton classButton;
@@ -76,7 +84,7 @@ public class DiagramView extends JPanel {
 
         // Model Selector ComboBox
         modelSelector = new JComboBox<>(new String[] {
-            "Select Model", "Use Case Diagram", "Class Diagram", "Sequence Diagram"
+            "Select Model", "Use Case Diagram", "Class Diagram", "State Diagram"
         });
         modelSelector.setAlignmentX(Component.LEFT_ALIGNMENT);
         leftPanel.add(modelSelector);
@@ -98,13 +106,14 @@ public class DiagramView extends JPanel {
        useCaseOptionsPanel.setVisible(false);
        leftPanel.add(useCaseOptionsPanel);
 
-       // Show Use Case panel on model selection
-       modelSelector.addActionListener(e -> {
+    // Show Use Case panel on model selection
+    modelSelector.addActionListener(e -> {
         String selected = (String) modelSelector.getSelectedItem();
-        
+
         useCaseOptionsPanel.setVisible("Use Case Diagram".equals(selected));
         classDiagramOptionsPanel.setVisible("Class Diagram".equals(selected));
-        
+        stateDiagramOptionsPanel.setVisible("State Diagram".equals(selected));
+
         revalidate();
         repaint();
     });
@@ -130,6 +139,22 @@ public class DiagramView extends JPanel {
     classDiagramOptionsPanel.setVisible(false);
     leftPanel.add(classDiagramOptionsPanel);
 
+    // State Diagram Options
+    stateDiagramOptionsPanel = new JPanel();
+    stateDiagramOptionsPanel.setLayout(new BoxLayout(stateDiagramOptionsPanel, BoxLayout.Y_AXIS));
+    stateDiagramOptionsPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
+    stateDiagramOptionsPanel.setBorder(BorderFactory.createTitledBorder("State Diagram Elements"));
+    initialStateButton = new JButton("Initial State");
+    finalStateButton = new JButton("Final State");
+    stateElementButton = new JButton("State");
+    decisionButton = new JButton("Decision");
+    stateDiagramOptionsPanel.add(initialStateButton);
+    stateDiagramOptionsPanel.add(finalStateButton);
+    stateDiagramOptionsPanel.add(stateElementButton);
+    stateDiagramOptionsPanel.add(decisionButton);
+    stateDiagramOptionsPanel.setVisible(false);
+    leftPanel.add(stateDiagramOptionsPanel);
+
     // -------- General Options --------
     generalButton = new JButton("General");
     generalButton.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -147,6 +172,7 @@ public class DiagramView extends JPanel {
     parallelogramButton = new JButton("Parallelogram");
     rectangleButton = new JButton("Rectangle");
     triangleButton = new JButton("Triangle");
+    textButton = new JButton("Text");
 
     // Add to panel
     generalOptionsPanel.add(cylinderButton);
@@ -155,6 +181,7 @@ public class DiagramView extends JPanel {
     generalOptionsPanel.add(parallelogramButton);
     generalOptionsPanel.add(rectangleButton);
     generalOptionsPanel.add(triangleButton);
+    generalOptionsPanel.add(textButton);
 
     generalOptionsPanel.setVisible(false);
     leftPanel.add(generalOptionsPanel);
@@ -216,6 +243,11 @@ public class DiagramView extends JPanel {
         return systemBoundaryButton;
     }
 
+    public JButton getInitialStateButton() { return initialStateButton; }
+    public JButton getFinalStateButton() { return finalStateButton; }
+    public JButton getStateElementButton() { return stateElementButton; }
+    public JButton getDecisionButton() { return decisionButton; }
+
     
     // Getter methods for general shape buttons
     public JButton getCylinderButton() {
@@ -241,6 +273,8 @@ public class DiagramView extends JPanel {
     public JButton getTriangleButton() {
         return triangleButton;
     }
+
+    public JButton getTextButton() { return textButton; }
 
     public JButton getClassButton() {
         return classButton;

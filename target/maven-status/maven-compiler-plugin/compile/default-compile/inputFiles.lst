@@ -24,7 +24,10 @@
 /Users/preksha/Desktop/OOAD_final_proj/BlockDiagramEditor/src/main/java/com/myapp/editor/model/general/ParallelogramElement.java
 /Users/preksha/Desktop/OOAD_final_proj/BlockDiagramEditor/src/main/java/com/myapp/editor/model/general/RectangleElement.java
 /Users/preksha/Desktop/OOAD_final_proj/BlockDiagramEditor/src/main/java/com/myapp/editor/model/general/TriangleElement.java
-/Users/preksha/Desktop/OOAD_final_proj/BlockDiagramEditor/src/main/java/com/myapp/editor/model/state/stateElement.java
+/Users/preksha/Desktop/OOAD_final_proj/BlockDiagramEditor/src/main/java/com/myapp/editor/model/state/DecisionStateElement.java
+/Users/preksha/Desktop/OOAD_final_proj/BlockDiagramEditor/src/main/java/com/myapp/editor/model/state/FinalStateElement.java
+/Users/preksha/Desktop/OOAD_final_proj/BlockDiagramEditor/src/main/java/com/myapp/editor/model/state/InitialStateElement.java
+/Users/preksha/Desktop/OOAD_final_proj/BlockDiagramEditor/src/main/java/com/myapp/editor/model/state/StateElement.java
 /Users/preksha/Desktop/OOAD_final_proj/BlockDiagramEditor/src/main/java/com/myapp/editor/model/usecase/ActorElement.java
 /Users/preksha/Desktop/OOAD_final_proj/BlockDiagramEditor/src/main/java/com/myapp/editor/model/usecase/SystemBoundary.java
 /Users/preksha/Desktop/OOAD_final_proj/BlockDiagramEditor/src/main/java/com/myapp/editor/model/usecase/UseCaseElement.java

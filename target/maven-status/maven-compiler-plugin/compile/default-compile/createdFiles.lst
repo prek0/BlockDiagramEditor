@@ -11,10 +11,11 @@ com/myapp/editor/model/general/EllipseElement.class
 com/myapp/editor/model/general/HexagonElement.class
 com/myapp/editor/model/general/TriangleElement.class
 com/myapp/editor/controller/command/PasteElementCommand.class
+com/myapp/editor/model/state/InitialStateElement.class
 com/myapp/editor/controller/DiagramController.class
 com/myapp/editor/model/dao/DBConnection.class
-com/myapp/editor/model/state/stateElement.class
 com/myapp/editor/view/DiagramPanel$2.class
+com/myapp/editor/model/state/DecisionStateElement.class
 com/myapp/editor/model/classDia/PackageBox.class
 com/myapp/editor/model/DiagramModel.class
 com/myapp/editor/model/DiagramElement.class
@@ -33,9 +34,11 @@ com/myapp/editor/controller/command/AddElementCommand.class
 com/myapp/editor/model/general/CylinderElement.class
 com/myapp/editor/controller/ElementFactory.class
 com/myapp/editor/model/general/RectangleElement.class
+com/myapp/editor/model/state/FinalStateElement.class
 com/myapp/editor/model/TextElement.class
 com/myapp/editor/model/classDia/EnumBox.class
 com/myapp/editor/view/DiagramView.class
 com/myapp/editor/model/classDia/ClassBox.class
+com/myapp/editor/model/state/StateElement.class
 com/myapp/editor/controller/DiagramController$3.class
 com/myapp/editor/view/DiagramPanel$1.class
