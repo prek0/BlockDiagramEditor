@@ -6,7 +6,13 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class SelectionManager {
-    private final Set<DiagramElement> selected = new HashSet<>();
+    private Set<DiagramElement> selected;
+    private Set<Connector> selectedConnectors;
+
+    public SelectionManager() {
+        selected = new HashSet<>();
+        selectedConnectors = new HashSet<>();
+    }
 
     public void clear() {
         for (DiagramElement e : selected) e.setSelected(false);
@@ -33,6 +39,14 @@ public class SelectionManager {
     }
 
     public boolean hasSelection() {
+        return !selected.isEmpty();
+    }
+
+    public Set<Connector> getSelectedConnectors() {
+        return new HashSet<>(selectedConnectors);
+    }
+
+    public boolean hasSelectedElements() {
         return !selected.isEmpty();
     }
 }

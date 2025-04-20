@@ -193,11 +193,16 @@ public class DiagramController {
         commandManager.executeCommand(moveCommand);
     }
 
-    public Connector connectorCreated(DiagramElement source, DiagramElement destination) {
+    public AddConnectorCommand createConnectorCommand(DiagramElement source, DiagramElement destination) {
         Connector connector = new Connector(source, destination);
-        connectors.add(connector);
-        return connector;
+        return new AddConnectorCommand(model, connector, view);
     }
+
+    public void handleConnectorCreation(DiagramElement source, DiagramElement destination) {
+        AddConnectorCommand cmd = createConnectorCommand(source, destination);
+        commandManager.executeCommand(cmd); 
+    }
+    
     
     // Method to add elements
     public void addElement(String type) {

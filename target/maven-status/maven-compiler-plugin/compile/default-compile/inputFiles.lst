@@ -1,9 +1,11 @@
 /Users/preksha/Desktop/OOAD_final_proj/BlockDiagramEditor/src/main/java/com/myapp/editor/Main.java
 /Users/preksha/Desktop/OOAD_final_proj/BlockDiagramEditor/src/main/java/com/myapp/editor/controller/DiagramController.java
 /Users/preksha/Desktop/OOAD_final_proj/BlockDiagramEditor/src/main/java/com/myapp/editor/controller/ElementFactory.java
+/Users/preksha/Desktop/OOAD_final_proj/BlockDiagramEditor/src/main/java/com/myapp/editor/controller/command/AddConnectorCommand.java
 /Users/preksha/Desktop/OOAD_final_proj/BlockDiagramEditor/src/main/java/com/myapp/editor/controller/command/AddElementCommand.java
 /Users/preksha/Desktop/OOAD_final_proj/BlockDiagramEditor/src/main/java/com/myapp/editor/controller/command/Command.java
 /Users/preksha/Desktop/OOAD_final_proj/BlockDiagramEditor/src/main/java/com/myapp/editor/controller/command/CommandManager.java
+/Users/preksha/Desktop/OOAD_final_proj/BlockDiagramEditor/src/main/java/com/myapp/editor/controller/command/DeleteCommand.java
 /Users/preksha/Desktop/OOAD_final_proj/BlockDiagramEditor/src/main/java/com/myapp/editor/controller/command/MoveElementCommand.java
 /Users/preksha/Desktop/OOAD_final_proj/BlockDiagramEditor/src/main/java/com/myapp/editor/controller/command/PasteElementCommand.java
 /Users/preksha/Desktop/OOAD_final_proj/BlockDiagramEditor/src/main/java/com/myapp/editor/model/Connector.java

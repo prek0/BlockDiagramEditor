@@ -54,4 +54,11 @@ public class GroupManager {
         }
         g2.setStroke(oldStroke);
     }
+
+    public void add(DiagramGroup group) {
+        if (!groups.contains(group)) {
+            groups.add(group);
+        }
+    }
+    
 }

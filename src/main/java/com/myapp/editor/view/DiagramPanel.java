@@ -5,20 +5,24 @@ import com.myapp.editor.model.*;
 import javax.swing.*;
 
 import com.myapp.editor.controller.DiagramController;
+import com.myapp.editor.controller.command.CommandManager;
+import com.myapp.editor.controller.command.DeleteCommand;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 public class DiagramPanel extends JPanel {
-    private List<DiagramElement> elements;
 
     private DiagramElement selectedElement = null;
     private Point dragOffset = null;
     private boolean resizing = false;
     private DiagramController controller;
     private int originalX, originalY;
+    private CommandManager commandManager;
+    private DiagramModel model;
+
 
     //grouping
     private Point dragStart = null;
@@ -33,14 +37,24 @@ public class DiagramPanel extends JPanel {
     private DiagramElement connectorSource = null;
     private boolean drawingConnector = false;
     private Point currentMousePoint = null;
-    private List<Connector> connectors = new ArrayList<>();
+    // private List<Connector> connectors = new ArrayList<>();
 
 
-    public DiagramPanel(List<DiagramElement> elements, List<Connector> connectors) {
-        this.elements = elements;
-        this.connectors = connectors;
+    public DiagramPanel(DiagramModel model, CommandManager commandManager) {
+        this.model = model;
+        this.commandManager = commandManager;
 
         setBackground(Color.WHITE);
+
+        // Add key listener for delete
+        addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_DELETE) {
+                    deleteSelectedElements();
+                }
+            }
+        });
 
         // Mouse press
         addMouseListener(new MouseAdapter() {
@@ -76,7 +90,7 @@ public class DiagramPanel extends JPanel {
                 // 3) element click (left button)
                 if (SwingUtilities.isLeftMouseButton(e)) {
                     boolean hit = false;
-                    for (DiagramElement el : elements) {
+                    for (DiagramElement el : model.getElements()) {
                         if (el.isOnResizeHandle(e.getPoint())) {
                             selectedElement = el;
                             resizing = true;
@@ -121,7 +135,7 @@ public class DiagramPanel extends JPanel {
 
                 // 4) start connector drawing (Shift + left click on element)
                 if (SwingUtilities.isLeftMouseButton(e) && e.isShiftDown()) {
-                    for (DiagramElement el : elements) {
+                    for (DiagramElement el : model.getElements()) {
                         if (el.contains(e.getPoint())) {
                             connectorSource = el;
                             drawingConnector = true;
@@ -149,7 +163,7 @@ public class DiagramPanel extends JPanel {
                 // 2) Finalize rubber-band selection
                 if (rubberBandSelecting) {
                     selectionManager.clear();
-                    for (DiagramElement el : elements) {
+                    for (DiagramElement el : model.getElements()) {
                         Rectangle eb = new Rectangle(el.getX(), el.getY(), el.getWidth(), el.getHeight());
                         if (selectionRect.intersects(eb)) {
                             selectionManager.select(el);
@@ -177,13 +191,14 @@ public class DiagramPanel extends JPanel {
 
                 // 5) finish connector drawing
                 if (drawingConnector && connectorSource != null) {
-                    for (DiagramElement el : elements) {
+                    for (DiagramElement el : model.getElements()) {
                         if (el.contains(e.getPoint()) && el != connectorSource) {
+                            // if (controller != null) {
+                            //     AddConnectorCommand cmd = controller.createConnectorCommand(connectorSource, el);
+                            //     commandManager.executeCommand(cmd); 
+                            // }
                             if (controller != null) {
-                                Connector conn = controller.connectorCreated(connectorSource, el);
-                                if (conn != null) {
-                                    connectors.add(conn);
-                                }
+                                controller.handleConnectorCreation(connectorSource, el);  // Pass to the controller
                             }
                             break;
                         }
@@ -290,32 +305,10 @@ public class DiagramPanel extends JPanel {
     public void addTextElement(String text, int x, int y) {
         int defaultFontSize = 14; // or whatever default size you want
         TextElement textElement = new TextElement(x, y, text, defaultFontSize);
-        elements.add(textElement);
+        model.addElement(textElement);
         repaint();
     }
 
-    // @Override
-    // protected void paintComponent(Graphics g) {
-    //     super.paintComponent(g);
-    //     Graphics2D g2 = (Graphics2D) g;
-    //     // draw elements
-    //     for (DiagramElement el : elements) el.draw(g2);
-    //     // draw connectors
-    //     for (Connector c : connectors) c.draw(g2);
-    //     // draw rubber-band
-    //     if (selectionRect != null) {
-    //         g2.setColor(new Color(0, 0, 255, 50));
-    //         g2.fill(selectionRect);
-    //         g2.setColor(Color.BLUE);
-    //         g2.draw(selectionRect);
-    //     }
-    //     // draw temporary connector
-    //     if (drawingConnector && connectorSource != null && dragStart != null) {
-    //         g2.setColor(Color.BLACK);
-    //         g2.setStroke(new BasicStroke(1.5f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND, 0, new float[]{5, 5}, 0));
-    //         g2.drawLine(connectorSource.getCenterX(), connectorSource.getCenterY(), dragStart.x, dragStart.y);
-    //     }
-    // }
     @Override
 protected void paintComponent(Graphics g) {
     super.paintComponent(g);
@@ -323,12 +316,12 @@ protected void paintComponent(Graphics g) {
     Graphics2D g2d = (Graphics2D) g;
 
     // 1. draw all elements
-    for (DiagramElement el : elements) {
+    for (DiagramElement el : model.getElements()) {
         el.draw(g2d);
     }
 
     // 2. draw all connectors
-    for (Connector c : connectors) {
+    for (Connector c : model.getConnectors()) {
         c.draw(g2d);
     }
 
@@ -347,6 +340,42 @@ protected void paintComponent(Graphics g) {
     }
 }
 
+    // Method to delete selected elements
+    private void deleteSelectedElements() {
+        if (!selectionManager.hasSelection()) {
+            return;
+        }
+
+        // Expand to include full group if needed
+        Set<DiagramElement> selectedElements = selectionManager.getSelected();
+        for (DiagramElement element : selectedElements) {
+            DiagramGroup group = groupManager.findGroup(Set.of(element));
+            if (group != null) {
+                for (DiagramElement member : group.getMembers()) {
+                    selectionManager.select(member);
+                }
+            }
+        }
+
+        selectedElements = selectionManager.getSelected();
+
+        // Gather connectors to delete
+        Set<Connector> connectorsToRemove = new HashSet<>();
+        for (Connector conn : model.getConnectors()) {
+            if (selectionManager.getSelectedConnectors().contains(conn) ||
+                selectedElements.contains(conn.getSource()) ||
+                selectedElements.contains(conn.getTarget())) {
+                connectorsToRemove.add(conn);
+            }
+        }
+
+        // Create and execute delete command
+        DeleteCommand cmd = new DeleteCommand(model, selectedElements, connectorsToRemove, groupManager);
+        commandManager.executeCommand(cmd);
+
+        selectionManager.clear();
+        repaint();
+    }
 
     public void setController(DiagramController controller) {
         this.controller = controller;

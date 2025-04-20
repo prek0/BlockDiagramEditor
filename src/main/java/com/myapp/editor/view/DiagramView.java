@@ -5,6 +5,7 @@ import java.awt.event.*;
 import javax.swing.*;
 
 import com.myapp.editor.controller.DiagramController;
+import com.myapp.editor.controller.command.CommandManager;
 import com.myapp.editor.model.*;
 
 public class DiagramView extends JPanel {
@@ -210,8 +211,8 @@ public class DiagramView extends JPanel {
     add(leftPanel, BorderLayout.WEST);
 
     // -------- Diagram Panel --------
-    
-    diagramPanel = new DiagramPanel(model.getElements(), model.getConnectors());
+    CommandManager commandManager = new CommandManager();
+    diagramPanel = new DiagramPanel(model, commandManager);
     add(diagramPanel, BorderLayout.CENTER);
     }
 

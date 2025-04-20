@@ -11,6 +11,7 @@ com/myapp/editor/controller/command/PasteElementCommand.class
 com/myapp/editor/controller/DiagramController.class
 com/myapp/editor/view/DiagramPanel$2.class
 com/myapp/editor/model/classDia/PackageBox.class
+com/myapp/editor/view/DiagramPanel$5.class
 com/myapp/editor/model/SelectionManager.class
 com/myapp/editor/model/general/ParallelogramElement.class
 com/myapp/editor/model/usecase/ActorElement.class
@@ -26,6 +27,7 @@ com/myapp/editor/view/DiagramView.class
 com/myapp/editor/model/classDia/ClassBox.class
 com/myapp/editor/model/state/StateElement.class
 com/myapp/editor/model/GroupManager.class
+com/myapp/editor/controller/command/AddConnectorCommand.class
 com/myapp/editor/controller/DiagramController$3.class
 com/myapp/editor/view/DiagramPanel$4.class
 com/myapp/editor/model/dao/UserDAO.class
@@ -52,4 +54,5 @@ com/myapp/editor/controller/command/AddElementCommand.class
 com/myapp/editor/model/general/CylinderElement.class
 com/myapp/editor/model/connector/CompositionConnector.class
 com/myapp/editor/model/connector/AggregationConnector.class
+com/myapp/editor/controller/command/DeleteCommand.class
 com/myapp/editor/view/DiagramPanel$1.class
