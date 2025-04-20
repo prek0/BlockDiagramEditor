@@ -31,7 +31,10 @@
 /Users/preksha/Desktop/OOAD_final_proj/BlockDiagramEditor/src/main/java/com/myapp/editor/model/usecase/ActorElement.java
 /Users/preksha/Desktop/OOAD_final_proj/BlockDiagramEditor/src/main/java/com/myapp/editor/model/usecase/SystemBoundary.java
 /Users/preksha/Desktop/OOAD_final_proj/BlockDiagramEditor/src/main/java/com/myapp/editor/model/usecase/UseCaseElement.java
+/Users/preksha/Desktop/OOAD_final_proj/BlockDiagramEditor/src/main/java/com/myapp/editor/view/DiagramGroup.java
 /Users/preksha/Desktop/OOAD_final_proj/BlockDiagramEditor/src/main/java/com/myapp/editor/view/DiagramPanel.java
 /Users/preksha/Desktop/OOAD_final_proj/BlockDiagramEditor/src/main/java/com/myapp/editor/view/DiagramView.java
+/Users/preksha/Desktop/OOAD_final_proj/BlockDiagramEditor/src/main/java/com/myapp/editor/view/GroupManager.java
 /Users/preksha/Desktop/OOAD_final_proj/BlockDiagramEditor/src/main/java/com/myapp/editor/view/LoginView.java
 /Users/preksha/Desktop/OOAD_final_proj/BlockDiagramEditor/src/main/java/com/myapp/editor/view/RegisterView.java
+/Users/preksha/Desktop/OOAD_final_proj/BlockDiagramEditor/src/main/java/com/myapp/editor/view/SelectionManager.java
