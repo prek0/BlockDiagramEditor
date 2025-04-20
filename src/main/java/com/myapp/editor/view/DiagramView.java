@@ -312,7 +312,7 @@ public class DiagramView extends JPanel {
     public JButton getPackageButton() {
         return packageButton;
     }
-
+    
     public void setupKeyboardShortcuts(Action undoAction, Action redoAction, Action copyAction, Action pasteAction) {
         InputMap inputMap = diagramPanel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
         ActionMap actionMap = diagramPanel.getActionMap();

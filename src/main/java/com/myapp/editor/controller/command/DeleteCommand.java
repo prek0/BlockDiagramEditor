@@ -44,7 +44,7 @@ public class DeleteCommand implements Command {
         model.getElements().addAll(elementsToDelete);
         model.getConnectors().addAll(connectorsToDelete);
         for (DiagramGroup group : affectedGroups) {
-            groupManager.add(group); // Make sure this method exists in your GroupManager
+            groupManager.add(group);
         }
     }
 }

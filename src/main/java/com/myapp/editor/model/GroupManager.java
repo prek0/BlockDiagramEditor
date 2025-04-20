@@ -61,4 +61,8 @@ public class GroupManager {
         }
     }
     
+    public List<DiagramGroup> getGroups() {
+        return groups;
+    }
+    
 }

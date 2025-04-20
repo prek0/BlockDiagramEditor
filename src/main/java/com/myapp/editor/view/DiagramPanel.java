@@ -377,6 +377,10 @@ protected void paintComponent(Graphics g) {
         repaint();
     }
 
+    public SelectionManager getSelectionManager() {
+        return selectionManager;
+    }
+
     public void setController(DiagramController controller) {
         this.controller = controller;
     }

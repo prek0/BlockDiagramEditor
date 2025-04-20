@@ -18,7 +18,7 @@ public class Main {
                 DiagramView view = new DiagramView(model);
                 List<DiagramElement> elements = model.getElements();
                 List<Connector> connectors = model.getConnectors();
-                DiagramController controller = new DiagramController(model, view, elements, connectors);
+                DiagramController controller = new DiagramController(model, view);
 
                 JFrame frame = new JFrame("Block Diagram Editor");
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

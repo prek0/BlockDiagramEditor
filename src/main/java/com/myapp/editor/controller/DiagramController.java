@@ -21,7 +21,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.ArrayList;
 import java.util.List;
 
 import com.myapp.editor.view.DiagramView;
@@ -29,8 +28,6 @@ import com.myapp.editor.view.DiagramView;
 public class DiagramController {
     private DiagramModel model;
     private DiagramView view;
-    private List<DiagramElement> elements;
-    private List<Connector> connectors;
     private ElementFactory elementFactory;
     private CommandManager commandManager; 
     private DiagramElement selectedElement;
@@ -45,12 +42,10 @@ public class DiagramController {
         this.text = text;
     }
 
-    public DiagramController(DiagramModel model, DiagramView view, List<DiagramElement> elements, List<Connector> connectors) {
+    public DiagramController(DiagramModel model, DiagramView view) {
         this.model = model;
         this.view = view;
         this.elementFactory = new ElementFactory(model);  
-        this.elements = new ArrayList<>();
-        this.connectors = new ArrayList<>();
 
         view.setSaveAction(e -> saveDiagram());
         view.setLoadAction(e -> loadDiagram());
@@ -67,7 +62,11 @@ public class DiagramController {
         view.setupKeyboardShortcuts(
         new AbstractAction() {
             public void actionPerformed(ActionEvent e) {
+                // commandManager.undo();
+                // view.getDiagramPanel().repaint();
                 commandManager.undo();
+                view.getDiagramPanel().getSelectionManager().clear(); 
+                view.getDiagramPanel().revalidate(); 
                 view.getDiagramPanel().repaint();
             }
         },
