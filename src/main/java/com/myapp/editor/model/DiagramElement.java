@@ -1,4 +1,4 @@
-package model;
+package com.myapp.editor.model;
 
 import java.awt.*;
 import java.io.Serializable;

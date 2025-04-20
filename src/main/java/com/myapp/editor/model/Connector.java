@@ -1,4 +1,4 @@
-package model;
+package com.myapp.editor.model;
 
 import java.awt.BasicStroke;
 import java.awt.Graphics;
@@ -6,7 +6,7 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Stroke;
 import java.io.Serializable;
-import model.usecase.*;
+import com.myapp.editor.model.usecase.*;
 
 public class Connector implements Serializable{
     public DiagramElement source;

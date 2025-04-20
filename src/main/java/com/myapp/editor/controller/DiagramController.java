@@ -1,6 +1,6 @@
-package controller;
+package com.myapp.editor.controller;
 
-import model.*;
+import com.myapp.editor.model.*;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -10,7 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import controller.command.*;
+import com.myapp.editor.controller.command.*;
 
 import java.awt.Graphics2D;
 import java.awt.Point;
@@ -24,7 +24,7 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import view.DiagramView;
+import com.myapp.editor.view.DiagramView;
 
 public class DiagramController {
     private DiagramModel model;

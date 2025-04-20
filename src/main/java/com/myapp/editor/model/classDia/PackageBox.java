@@ -1,6 +1,6 @@
-package model.classDia;
+package com.myapp.editor.model.classDia;
 
-import model.DiagramElement;
+import com.myapp.editor.model.DiagramElement;
 
 import java.awt.*;
 

@@ -1,7 +1,7 @@
-package model.classDia;
+package com.myapp.editor.model.classDia;
 
 import java.awt.*;
-import model.DiagramElement;
+import com.myapp.editor.model.DiagramElement;
 
 public class ClassBox extends DiagramElement {
 

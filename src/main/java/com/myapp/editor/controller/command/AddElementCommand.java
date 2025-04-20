@@ -1,8 +1,8 @@
-package controller.command;
+package com.myapp.editor.controller.command;
 
-import model.DiagramElement;
-import model.DiagramModel;
-import view.DiagramView;
+import com.myapp.editor.model.DiagramElement;
+import com.myapp.editor.model.DiagramModel;
+import com.myapp.editor.view.DiagramView;
 
 public class AddElementCommand implements Command {
     private DiagramModel model;

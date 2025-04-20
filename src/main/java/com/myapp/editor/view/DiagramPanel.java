@@ -1,10 +1,10 @@
-package view;
+package com.myapp.editor.view;
 
-import model.*;
+import com.myapp.editor.model.*;
 
 import javax.swing.*;
 
-import controller.DiagramController;
+import com.myapp.editor.controller.DiagramController;
 
 import java.awt.*;
 import java.awt.event.*;

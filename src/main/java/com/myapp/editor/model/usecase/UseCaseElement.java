@@ -1,6 +1,6 @@
-package model.usecase;
+package com.myapp.editor.model.usecase;
 
-import model.*;
+import com.myapp.editor.model.*;
 
 import java.awt.Color;
 import java.awt.Graphics;

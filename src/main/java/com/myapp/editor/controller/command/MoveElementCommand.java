@@ -1,6 +1,6 @@
-package controller.command;
+package com.myapp.editor.controller.command;
 
-import model.DiagramElement;
+import com.myapp.editor.model.DiagramElement;
 
 public class MoveElementCommand implements Command {
     private DiagramElement element;

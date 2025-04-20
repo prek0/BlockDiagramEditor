@@ -1,6 +1,6 @@
-package model.general;
+package com.myapp.editor.model.general;
 
-import model.DiagramElement;
+import com.myapp.editor.model.DiagramElement;
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
 

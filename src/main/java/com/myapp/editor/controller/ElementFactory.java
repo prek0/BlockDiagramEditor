@@ -1,16 +1,16 @@
-package controller;
+package com.myapp.editor.controller;
 
-import model.*;
-import model.general.CylinderElement;
-import model.general.EllipseElement;
-import model.general.HexagonElement;
-import model.general.ParallelogramElement;
-import model.general.RectangleElement;
-import model.general.TriangleElement;
-import model.usecase.UseCaseElement;
-import model.usecase.ActorElement;
-import model.usecase.SystemBoundary;
-import model.classDia.*;
+import com.myapp.editor.model.*;
+import com.myapp.editor.model.general.CylinderElement;
+import com.myapp.editor.model.general.EllipseElement;
+import com.myapp.editor.model.general.HexagonElement;
+import com.myapp.editor.model.general.ParallelogramElement;
+import com.myapp.editor.model.general.RectangleElement;
+import com.myapp.editor.model.general.TriangleElement;
+import com.myapp.editor.model.usecase.UseCaseElement;
+import com.myapp.editor.model.usecase.ActorElement;
+import com.myapp.editor.model.usecase.SystemBoundary;
+import com.myapp.editor.model.classDia.*;
 
 public class ElementFactory {
     private DiagramModel model;
