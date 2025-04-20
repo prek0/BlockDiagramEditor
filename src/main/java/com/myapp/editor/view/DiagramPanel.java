@@ -229,6 +229,13 @@ public class DiagramPanel extends JPanel {
         });
     }
 
+    public void addTextElement(String text, int x, int y) {
+        int defaultFontSize = 14; // or whatever default size you want
+        TextElement textElement = new TextElement(x, y, text, defaultFontSize);
+        elements.add(textElement);
+        repaint();
+    }
+
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);

@@ -153,6 +153,28 @@ public class DiagramController {
                     selectedElement = clicked;
                 }
             }
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                // Check if it's a double-click
+                if (e.getClickCount() == 2) {
+                    // Iterate over all elements to find the one at the clicked position
+                    for (DiagramElement element : model.getElements()) {
+                        if (element.containsPoint(e.getX(), e.getY())) { // Check if the click is inside the element's bounds
+                            // Prompt user to enter new text for the element
+                            String newText = JOptionPane.showInputDialog(view, "Edit text for the element:", element.getText());
+
+                            if (newText != null && !newText.trim().isEmpty()) {
+                                // Trim and update the text of the element
+                                element.setText(newText.trim());
+                                model.updateElement(element); // Ensure the model is updated
+                                view.getDiagramPanel().repaint(); // Repaint the diagram to reflect changes
+                            }
+                            break; // Exit the loop after finding the element
+                        }
+                    }
+                }
+            }
         });
         
     }

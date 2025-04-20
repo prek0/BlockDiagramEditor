@@ -30,6 +30,10 @@ public abstract class DiagramElement implements Serializable {
     //     return px >= x && px <= x + width && py >= y && py <= y + height;
     // }
 
+    public boolean containsPoint(int mouseX, int mouseY) {
+        return getShape().contains(mouseX, mouseY);
+    }
+
     public boolean onResizeHandle(int px, int py) {
         int handleSize = 10;
         return px >= x + width - handleSize && px <= x + width &&

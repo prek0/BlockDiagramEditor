@@ -48,4 +48,16 @@ public class DiagramModel {
     public void removeConnector(Connector connector) {
         connectors.remove(connector);
     }
+
+    // Method to update an existing diagram element in the model
+    public void updateElement(DiagramElement updatedElement) {
+        for (int i = 0; i < elements.size(); i++) {
+            DiagramElement element = elements.get(i);
+            if (element.equals(updatedElement)) {
+                // Replace the old element with the updated one
+                elements.set(i, updatedElement);
+                return;
+            }
+        }
+    }
 }
