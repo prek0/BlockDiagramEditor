@@ -1,19 +1,38 @@
 package com.myapp.editor.view;
 
-import com.myapp.editor.model.*;
-
-import javax.swing.*;
-
-import com.myapp.editor.controller.DiagramController;
-import com.myapp.editor.controller.command.CommandManager;
-import com.myapp.editor.controller.command.DeleteCommand;
-
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Point;
+import java.awt.Rectangle;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+
+import javax.swing.AbstractAction;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.KeyStroke;
+import javax.swing.SwingUtilities;
+
+import com.myapp.editor.controller.DiagramController;
+import com.myapp.editor.controller.command.CommandManager;
+import com.myapp.editor.controller.command.DeleteCommand;
+import com.myapp.editor.model.Connector;
+import com.myapp.editor.model.DiagramElement;
+import com.myapp.editor.model.DiagramGroup;
+import com.myapp.editor.model.DiagramModel;
+import com.myapp.editor.model.GroupManager;
+import com.myapp.editor.model.SelectionManager;
+import com.myapp.editor.model.TextElement;
 
 public class DiagramPanel extends JPanel {
 

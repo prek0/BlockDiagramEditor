@@ -1,7 +1,12 @@
 package com.myapp.editor.model.state;
 
-import java.awt.*;
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Shape;
 import java.awt.geom.Path2D;
+
 import com.myapp.editor.model.DiagramElement;
 
 
@@ -30,11 +35,12 @@ public class DecisionStateElement extends DiagramElement {
             g2.setStroke(new BasicStroke(2));
             g2.setColor(Color.BLUE);
             g2.draw(diamond.getBounds2D());
+            g.setColor(Color.RED);
+            g.fillRect(x + width - 10, y + height - 10, 10, 10); 
+            g.setColor(Color.BLACK);
         }
 
-        g.setColor(Color.RED);
-        g.fillRect(x + width - 10, y + height - 10, 10, 10); 
-        g.setColor(Color.BLACK);
+
     }
 
     @Override

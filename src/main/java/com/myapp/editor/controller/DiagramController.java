@@ -230,17 +230,30 @@ public class DiagramController {
     public void addElement(String type) {
         int x = elementFactory.randomX();
         int y = elementFactory.randomY();
-
-        String labelText = JOptionPane.showInputDialog(view, "Enter text for the element:", "Element Label", JOptionPane.PLAIN_MESSAGE);     
+    
+        String labelText = JOptionPane.showInputDialog(view, "Enter text for the element:", "Element Label", JOptionPane.PLAIN_MESSAGE);
+    
+        // Cancel clicked: labelText will be null, so do nothing
+        if (labelText == null) {
+            return;
+        }
+    
+        // If text is empty or just spaces, assign default label
+        if (labelText.trim().isEmpty()) {
+            labelText = type; // Default label is the type name
+        } else {
+            labelText = labelText.trim(); // Clean up whitespace
+        }
+    
+        // Create element and execute add command
         DiagramElement element = elementFactory.createElement(type, x, y, labelText);
-
-        // Create the AddElementCommand and execute it using CommandManager
         Command addElementCommand = new AddElementCommand(model, element, view);
-        commandManager.executeCommand(addElementCommand);  
-
+        commandManager.executeCommand(addElementCommand);
+    
         view.getDiagramPanel().repaint();
     }
-
+    
+    
 
 
     public void groupMoved(Map<DiagramElement, Point> originalPositions, Map<DiagramElement, Point> newPositions) {

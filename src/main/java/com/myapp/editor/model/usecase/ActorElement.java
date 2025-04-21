@@ -1,12 +1,12 @@
 package com.myapp.editor.model.usecase;
 
-import com.myapp.editor.model.*;
-
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Shape;
 import java.awt.geom.Rectangle2D;
+
+import com.myapp.editor.model.DiagramElement;
 
 public class ActorElement extends DiagramElement {
     // Base dimensions used for scaling actor parts
@@ -65,12 +65,13 @@ public class ActorElement extends DiagramElement {
             g2.setColor(Color.RED);
             g2.drawRect(x - 2, y - 2, width + 4, height + 4);
             g2.setColor(Color.BLACK);
+
+            // Draw resize handle
+            g2.setColor(Color.RED);
+            g2.fillRect(x + width - 10, y + height - 10, 10, 10);
+            g2.setColor(Color.BLACK);
         }
         
-        // Draw resize handle
-        g2.setColor(Color.RED);
-        g2.fillRect(x + width - 10, y + height - 10, 10, 10);
-        g2.setColor(Color.BLACK);
     }
     
     @Override

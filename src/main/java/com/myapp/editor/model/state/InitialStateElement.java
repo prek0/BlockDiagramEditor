@@ -1,7 +1,11 @@
 package com.myapp.editor.model.state;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Shape;
 import java.awt.geom.Ellipse2D;
+
 import com.myapp.editor.model.DiagramElement;
 
 
@@ -29,6 +33,9 @@ public class InitialStateElement extends DiagramElement {
         if (selected) {
             g.setColor(Color.RED);
             g.drawRect(x - 2, y - 2, width + 4, height + 4);
+            g.setColor(Color.BLACK);
+            g.setColor(Color.RED);
+            g.fillRect(x + width - 10, y + height - 10, 10, 10); 
             g.setColor(Color.BLACK);
         }
 

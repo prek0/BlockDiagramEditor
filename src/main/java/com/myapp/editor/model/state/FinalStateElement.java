@@ -1,7 +1,12 @@
 package com.myapp.editor.model.state;
 
-import java.awt.*;
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Shape;
 import java.awt.geom.Ellipse2D;
+
 import com.myapp.editor.model.DiagramElement;
 
 public class FinalStateElement extends DiagramElement {
@@ -29,11 +34,12 @@ public class FinalStateElement extends DiagramElement {
             g2.setStroke(new BasicStroke(2));
             g2.setColor(Color.BLUE);
             g2.draw(new Ellipse2D.Double(x - 2, y - 2, outer + 4, outer + 4));
+            g.setColor(Color.RED);
+            g.fillRect(x + width - 10, y + height - 10, 10, 10); 
+            g.setColor(Color.BLACK);
         }
 
-        g.setColor(Color.RED);
-        g.fillRect(x + width - 10, y + height - 10, 10, 10); 
-        g.setColor(Color.BLACK);
+
     }
 
     @Override

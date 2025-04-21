@@ -1,8 +1,11 @@
 package com.myapp.editor.model.general;
 
-import com.myapp.editor.model.DiagramElement;
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Shape;
 import java.awt.geom.Rectangle2D;
+
+import com.myapp.editor.model.DiagramElement;
 
 public class RectangleElement extends DiagramElement {
 
@@ -19,6 +22,16 @@ public class RectangleElement extends DiagramElement {
         if (resizing) {
             g.setColor(Color.RED);
             g.fillRect(x + width - 10, y + height - 10, 10, 10); // Resize handle
+        }
+        if (selected) {
+            g.setColor(Color.RED);
+            g.drawRect(x - 2, y - 2, width + 4, height + 4);
+            g.setColor(Color.BLACK);
+
+            // Draw resize handle
+            g.setColor(Color.RED);
+            g.fillRect(x + width - 10, y + height - 10, 10, 10);
+            g.setColor(Color.BLACK);
         }
     }
 

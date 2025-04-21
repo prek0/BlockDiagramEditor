@@ -1,8 +1,14 @@
 package com.myapp.editor.model.state;
 
-import java.awt.*;
-import java.awt.geom.RoundRectangle2D;
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.FontMetrics;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Shape;
 import java.awt.geom.Rectangle2D;
+import java.awt.geom.RoundRectangle2D;
+
 import com.myapp.editor.model.DiagramElement;
 
 public class StateElement extends DiagramElement {
@@ -35,6 +41,9 @@ public class StateElement extends DiagramElement {
             g2.setStroke(new BasicStroke(2));
             g2.setColor(Color.BLUE);
             g2.draw(new RoundRectangle2D.Double(x - 2, y - 2, width + 4, height + 4, ARC_RADIUS, ARC_RADIUS));
+            g.setColor(Color.RED);
+            g.fillRect(x + width - 10, y + height - 10, 10, 10); 
+            g.setColor(Color.BLACK);
         }
 
         g.setColor(Color.RED);
