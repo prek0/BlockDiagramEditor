@@ -7,6 +7,7 @@
 /Users/preksha/Desktop/OOAD_final_proj/BlockDiagramEditor/src/main/java/com/myapp/editor/controller/command/CommandManager.java
 /Users/preksha/Desktop/OOAD_final_proj/BlockDiagramEditor/src/main/java/com/myapp/editor/controller/command/DeleteCommand.java
 /Users/preksha/Desktop/OOAD_final_proj/BlockDiagramEditor/src/main/java/com/myapp/editor/controller/command/MoveElementCommand.java
+/Users/preksha/Desktop/OOAD_final_proj/BlockDiagramEditor/src/main/java/com/myapp/editor/controller/command/MoveGroupCommand.java
 /Users/preksha/Desktop/OOAD_final_proj/BlockDiagramEditor/src/main/java/com/myapp/editor/controller/command/PasteElementCommand.java
 /Users/preksha/Desktop/OOAD_final_proj/BlockDiagramEditor/src/main/java/com/myapp/editor/model/Connector.java
 /Users/preksha/Desktop/OOAD_final_proj/BlockDiagramEditor/src/main/java/com/myapp/editor/model/DiagramElement.java

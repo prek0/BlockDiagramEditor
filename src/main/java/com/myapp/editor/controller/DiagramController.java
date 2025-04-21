@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.List;
+import java.util.Map;
 
 import com.myapp.editor.view.DiagramView;
 
@@ -217,6 +218,11 @@ public class DiagramController {
 
         view.getDiagramPanel().repaint();
     }
+
+    public void groupMoved(Map<DiagramElement, Point> originalPositions, Map<DiagramElement, Point> newPositions) {
+        commandManager.executeCommand(new MoveGroupCommand(originalPositions, newPositions));
+    }
+
 
 
    public void saveDiagram() {

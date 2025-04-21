@@ -10,7 +10,9 @@ import com.myapp.editor.controller.command.DeleteCommand;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 public class DiagramPanel extends JPanel {
@@ -32,6 +34,7 @@ public class DiagramPanel extends JPanel {
     private boolean draggingGroup = false;
     private final SelectionManager selectionManager = new SelectionManager();
     private final GroupManager groupManager = new GroupManager();
+    private Map<DiagramElement, Point> originalGroupPositions;
 
     //connector
     private DiagramElement connectorSource = null;
@@ -66,14 +69,34 @@ public class DiagramPanel extends JPanel {
 
                 // 1) group hit-test
                 activeGroup = groupManager.findGroupAt(e.getX(), e.getY());
+                // if (activeGroup != null && SwingUtilities.isLeftMouseButton(e)) {
+                //     draggingGroup = true;
+                //     dragStart = e.getPoint();
+                //     // select members
+                //     selectionManager.clear();
+                //     for (DiagramElement m : activeGroup.getMembers()) {
+                //         selectionManager.select(m);
+                //     }
+                //     repaint();
+                //     return;
+                // }
+
                 if (activeGroup != null && SwingUtilities.isLeftMouseButton(e)) {
                     draggingGroup = true;
                     dragStart = e.getPoint();
+
+                    // Store original positions for undo
+                    originalGroupPositions = new HashMap<>();
+                    for (DiagramElement m : activeGroup.getMembers()) {
+                        originalGroupPositions.put(m, new Point(m.getX(), m.getY()));
+                    }
+
                     // select members
                     selectionManager.clear();
                     for (DiagramElement m : activeGroup.getMembers()) {
                         selectionManager.select(m);
                     }
+
                     repaint();
                     return;
                 }
@@ -153,12 +176,41 @@ public class DiagramPanel extends JPanel {
             @Override
             public void mouseReleased(MouseEvent e) {
                 // 1) End group drag
+                // if (draggingGroup) {
+                //     draggingGroup = false;
+                //     activeGroup = null;
+                //     repaint();
+                //     return;
+                // }
+
                 if (draggingGroup) {
                     draggingGroup = false;
+                
+                    if (controller != null && originalGroupPositions != null && !originalGroupPositions.isEmpty()) {
+                        Map<DiagramElement, Point> newPositions = new HashMap<>();
+                        for (Map.Entry<DiagramElement, Point> entry : originalGroupPositions.entrySet()) {
+                            DiagramElement el = entry.getKey();
+                            Point oldPos = entry.getValue();
+                            Point newPos = new Point(el.getX(), el.getY());
+                
+                            // Only store elements that were actually moved
+                            if (!oldPos.equals(newPos)) {
+                                newPositions.put(el, newPos);
+                            }
+                        }
+                
+                        // Only execute command if something actually moved
+                        if (!newPositions.isEmpty()) {
+                            controller.groupMoved(originalGroupPositions, newPositions);
+                        }
+                    }
+                
                     activeGroup = null;
+                    originalGroupPositions = null;
                     repaint();
                     return;
                 }
+                
 
                 // 2) Finalize rubber-band selection
                 if (rubberBandSelecting) {
@@ -249,14 +301,30 @@ public class DiagramPanel extends JPanel {
                 }
 
                 // 4. dragging a grouped box
-                if (draggingGroup) {
+                if (draggingGroup && activeGroup != null && dragOffset != null) {
                     int dx = e.getX() - dragStart.x;
                     int dy = e.getY() - dragStart.y;
-                    activeGroup.move(dx, dy);
+                    //activeGroup.move(dx, dy);
+
+                    // Save original positions only once
+                    if (originalGroupPositions == null) {
+                        originalGroupPositions = new HashMap<>();
+                        for (DiagramElement el : activeGroup.getMembers()) {
+                            originalGroupPositions.put(el, new Point(el.getX(), el.getY()));
+                        }
+                    }
+                
+                    // Move each group member
+                    for (DiagramElement el : activeGroup.getMembers()) {
+                        el.setPosition(el.getX() + dx, el.getY() + dy);
+                    }
+                
+                    dragOffset = e.getPoint();
                     dragStart = e.getPoint();
                     repaint();
                     return;
-                }
+                }   
+                
 
                 // 5. dragging individual selection
                 if (selectionManager.hasSelection() && dragStart != null) {

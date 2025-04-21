@@ -53,6 +53,7 @@ com/myapp/editor/Main.class
 com/myapp/editor/controller/command/AddElementCommand.class
 com/myapp/editor/model/general/CylinderElement.class
 com/myapp/editor/model/connector/CompositionConnector.class
+com/myapp/editor/controller/command/MoveGroupCommand.class
 com/myapp/editor/model/connector/AggregationConnector.class
 com/myapp/editor/controller/command/DeleteCommand.class
 com/myapp/editor/view/DiagramPanel$1.class
