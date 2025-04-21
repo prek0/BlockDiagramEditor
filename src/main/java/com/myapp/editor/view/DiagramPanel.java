@@ -42,6 +42,8 @@ public class DiagramPanel extends JPanel {
     private Point currentMousePoint = null;
     // private List<Connector> connectors = new ArrayList<>();
 
+    // zoom factor
+    private double zoomFactor = 1.0;
 
     public DiagramPanel(DiagramModel model, CommandManager commandManager) {
         this.model = model;
@@ -55,6 +57,17 @@ public class DiagramPanel extends JPanel {
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_DELETE) {
                     deleteSelectedElements();
+                }
+                // Zoom In (Ctrl + '+')
+                if (e.isControlDown() && 
+                    (e.getKeyCode() == KeyEvent.VK_PLUS || 
+                    (e.getKeyCode() == KeyEvent.VK_EQUALS && e.isShiftDown()))) {
+                        zoomIn();
+                }
+
+                // Zoom Out (Ctrl + '-')
+                if (e.isControlDown() && e.getKeyCode() == KeyEvent.VK_MINUS) {
+                    zoomOut();
                 }
             }
         });
@@ -380,36 +393,49 @@ public class DiagramPanel extends JPanel {
         repaint();
     }
 
+    // Zoom In method
+    private void zoomIn() {
+        zoomFactor *= 1.1;  // Increase zoom by 10%
+        repaint();
+    }
+
+    // Zoom Out method
+    private void zoomOut() {
+        zoomFactor /= 1.1;  // Decrease zoom by 10%
+        repaint();
+    }
+
     @Override
-protected void paintComponent(Graphics g) {
-    super.paintComponent(g);
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
 
-    Graphics2D g2d = (Graphics2D) g;
+        Graphics2D g2d = (Graphics2D) g;
+        g2d.scale(zoomFactor, zoomFactor);  
 
-    // 1. draw all elements
-    for (DiagramElement el : model.getElements()) {
-        el.draw(g2d);
+        // 1. draw all elements
+        for (DiagramElement el : model.getElements()) {
+            el.draw(g2d);
+        }
+
+        // 2. draw all connectors
+        for (Connector c : model.getConnectors()) {
+            c.draw(g2d);
+        }
+
+        // 3. draw selection rectangle
+        if (rubberBandSelecting && selectionRect != null) {
+            g2d.setColor(Color.BLUE);
+            g2d.draw(selectionRect);
+        }
+
+        // 4. draw dragging connector if in progress
+        if (drawingConnector && connectorSource != null && currentMousePoint != null) {
+            g2d.setColor(Color.GRAY);
+            g2d.setStroke(new BasicStroke(2));
+            Point start = connectorSource.getCenter(); // your element should have a getCenter()
+            g2d.drawLine(start.x, start.y, currentMousePoint.x, currentMousePoint.y);
+        }
     }
-
-    // 2. draw all connectors
-    for (Connector c : model.getConnectors()) {
-        c.draw(g2d);
-    }
-
-    // 3. draw selection rectangle
-    if (rubberBandSelecting && selectionRect != null) {
-        g2d.setColor(Color.BLUE);
-        g2d.draw(selectionRect);
-    }
-
-    // 4. draw dragging connector if in progress
-    if (drawingConnector && connectorSource != null && currentMousePoint != null) {
-        g2d.setColor(Color.GRAY);
-        g2d.setStroke(new BasicStroke(2));
-        Point start = connectorSource.getCenter(); // your element should have a getCenter()
-        g2d.drawLine(start.x, start.y, currentMousePoint.x, currentMousePoint.y);
-    }
-}
 
     // Method to delete selected elements
     private void deleteSelectedElements() {
