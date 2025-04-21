@@ -1,29 +1,26 @@
 package com.myapp.editor.controller;
 
-import com.myapp.editor.model.*;
-
-import javax.imageio.ImageIO;
-import javax.swing.*;
-import javax.swing.filechooser.FileNameExtensionFilter;
-
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-
-import com.myapp.editor.controller.command.*;
-
-import java.awt.Graphics2D;
-import java.awt.Point;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.util.List;
 import java.util.Map;
 
+import javax.swing.AbstractAction;
+import javax.swing.JOptionPane;
+
+import com.myapp.editor.controller.command.AddConnectorCommand;
+import com.myapp.editor.controller.command.AddElementCommand;
+import com.myapp.editor.controller.command.Command;
+import com.myapp.editor.controller.command.CommandManager;
+import com.myapp.editor.controller.command.LoadCommand;
+import com.myapp.editor.controller.command.MoveElementCommand;
+import com.myapp.editor.controller.command.MoveGroupCommand;
+import com.myapp.editor.controller.command.PasteElementCommand;
+import com.myapp.editor.controller.command.SaveCommand;
+import com.myapp.editor.model.Connector;
+import com.myapp.editor.model.DiagramElement;
+import com.myapp.editor.model.DiagramModel;
 import com.myapp.editor.view.DiagramView;
 
 public class DiagramController {
@@ -51,8 +48,8 @@ public class DiagramController {
         this.view = view;
         this.elementFactory = new ElementFactory(model);  
 
-        view.setSaveAction(e -> saveDiagram());
-        view.setLoadAction(e -> loadDiagram());
+        view.setSaveAction(e -> new SaveCommand(model, view).execute());
+        view.setLoadAction(e -> new LoadCommand(model, view).execute());
 
         // Initialize CommandManager here
         this.commandManager = new CommandManager();  // Initialize the CommandManager
@@ -250,94 +247,4 @@ public class DiagramController {
         commandManager.executeCommand(new MoveGroupCommand(originalPositions, newPositions));
     }
 
-
-
-   public void saveDiagram() {
-        JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setDialogTitle("Save Diagram");
-        fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("PNG Image", "png"));
-        fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("JPEG Image", "jpeg"));
-        fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("Diagram File", "diag"));
-        fileChooser.setAcceptAllFileFilterUsed(false);
-    
-        int userSelection = fileChooser.showSaveDialog(view);
-        if (userSelection == JFileChooser.APPROVE_OPTION) {
-            File file = fileChooser.getSelectedFile();
-            String extension = ((FileNameExtensionFilter) fileChooser.getFileFilter()).getExtensions()[0];
-            String fileName = file.getAbsolutePath();
-    
-            // Make sure the file name ends with the correct extension
-            if (!fileName.endsWith("." + extension)) {
-                file = new File(fileName + "." + extension);
-            }
-    
-            try {
-                if (extension.equals("png") || extension.equals("jpeg")) {
-                    // Create the image based on the view's dimensions
-                    BufferedImage image = new BufferedImage(view.getWidth(), view.getHeight(), BufferedImage.TYPE_INT_ARGB);
-                    Graphics2D g2d = image.createGraphics();
-                    view.paint(g2d);
-                    g2d.dispose();
-    
-                    // Check if the extension is JPEG/JPG, and write accordingly
-                    if (extension.equals("jpeg")) {
-                        // Convert ARGB to RGB for JPEG compatibility
-                        BufferedImage rgbImage = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_RGB);
-                        Graphics2D g2dRgb = rgbImage.createGraphics();
-                        g2dRgb.drawImage(image, 0, 0, null);
-                        g2dRgb.dispose();
-    
-                        // Write as JPEG
-                        boolean saved = ImageIO.write(rgbImage, "JPEG", file);
-                        if (!saved) {
-                            JOptionPane.showMessageDialog(view, "Error saving JPEG image. Please try again.", "Error", JOptionPane.ERROR_MESSAGE);
-                        }
-                    } else {
-                        // Write as PNG
-                        ImageIO.write(image, "PNG", file);
-                    }
-    
-                    JOptionPane.showMessageDialog(view, "Image saved successfully!");
-                } else {
-                    // Saving diagram as a .diag file
-                    try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file))) {
-                        oos.writeObject(model.getElements());
-                        oos.writeObject(model.getConnectors());
-                        JOptionPane.showMessageDialog(view, "Diagram saved successfully!");
-                    }
-                }
-            } catch (Exception ex) {
-                JOptionPane.showMessageDialog(view, "Error saving file: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-            }
-        }
-    }
-    
-    
-    
-    
-    @SuppressWarnings("unchecked")
-    public void loadDiagram() {
-        JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setDialogTitle("Load Diagram");
-        fileChooser.setFileFilter(new FileNameExtensionFilter("Diagram Files", "diag"));
-    
-        int userSelection = fileChooser.showOpenDialog(view);
-        if (userSelection == JFileChooser.APPROVE_OPTION) {
-            File file = fileChooser.getSelectedFile();
-            try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file))) {
-                List<DiagramElement> loadedElements = (List<DiagramElement>) ois.readObject();
-                List<Connector> loadedConnectors = (List<Connector>) ois.readObject();
-    
-                model.getElements().clear();
-                model.getElements().addAll(loadedElements);
-                model.getConnectors().clear();
-                model.getConnectors().addAll(loadedConnectors);
-    
-                view.repaint();
-                JOptionPane.showMessageDialog(view, "Diagram loaded successfully!");
-            } catch (IOException | ClassNotFoundException ex) {
-                JOptionPane.showMessageDialog(view, "Error loading diagram: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-            }
-        }
-    }
 }    
