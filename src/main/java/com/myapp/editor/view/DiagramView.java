@@ -69,13 +69,6 @@ public class DiagramView extends JPanel {
         fileMenu.add(loadMenuItem);
         menuBar.add(fileMenu);
 
-        JMenu editMenu = new JMenu("Edit");
-        undoMenuItem = new JMenuItem("Undo");
-        redoMenuItem = new JMenuItem("Redo");
-        editMenu.add(undoMenuItem);
-        editMenu.add(redoMenuItem);
-        menuBar.add(editMenu);
-
         JPanel menuPanel = new JPanel(new BorderLayout());
         menuPanel.add(menuBar, BorderLayout.NORTH);
         add(menuPanel, BorderLayout.NORTH);
@@ -233,14 +226,6 @@ public class DiagramView extends JPanel {
 
     public void setController(DiagramController controller) {
         this.controller = controller;
-    }
-
-    public void setUndoAction(ActionListener l) {
-        undoMenuItem.addActionListener(l);
-    }
-
-    public void setRedoAction(ActionListener l) {
-        redoMenuItem.addActionListener(l);
     }
 
     public DiagramPanel getDiagramPanel() {
