@@ -249,8 +249,11 @@ public class DiagramPanel extends JPanel {
                             //     AddConnectorCommand cmd = controller.createConnectorCommand(connectorSource, el);
                             //     commandManager.executeCommand(cmd); 
                             // }
+                            // if (controller != null) {
+                            //     controller.handleConnectorCreation(connectorSource, el);  // Pass to the controller
+                            // }
                             if (controller != null) {
-                                controller.handleConnectorCreation(connectorSource, el);  // Pass to the controller
+                                controller.addConnector(controller.getSelectedConnectorType(), connectorSource, el);
                             }
                             break;
                         }

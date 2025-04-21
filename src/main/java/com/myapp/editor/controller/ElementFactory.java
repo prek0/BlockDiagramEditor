@@ -14,6 +14,12 @@ import com.myapp.editor.model.state.StateElement;
 import com.myapp.editor.model.usecase.UseCaseElement;
 import com.myapp.editor.model.usecase.ActorElement;
 import com.myapp.editor.model.usecase.SystemBoundary;
+import com.myapp.editor.model.connector.AggregationConnector;
+import com.myapp.editor.model.connector.AssociationConnector;
+import com.myapp.editor.model.connector.CompositionConnector;
+import com.myapp.editor.model.connector.DashedLineConnector;
+import com.myapp.editor.model.connector.GeneralisationConnector;
+import com.myapp.editor.model.connector.RealisationConnector;
 import com.myapp.editor.model.classDia.*;
 
 public class ElementFactory {
@@ -70,6 +76,26 @@ public class ElementFactory {
                 return new TextElement(x, y, text, id);
             default:
                 throw new IllegalArgumentException("Unknown element type: " + type);
+        }
+    }
+
+     // Create connectors (wires, arrows, etc.)
+    public Connector createConnector(String type, DiagramElement source, DiagramElement target) {
+        switch (type) {
+            case "Association":
+                return new AssociationConnector(source, target);
+            case "Generalization":
+                return new GeneralisationConnector(source, target);
+            case "Realization":
+                return new RealisationConnector(source, target);
+            case "Aggregation":
+                return new AggregationConnector(source, target);
+            case "Composition":
+                return new CompositionConnector(source, target);
+            case "DashedLine":
+                return new DashedLineConnector(source, target);
+            default:
+                throw new IllegalArgumentException("Unknown connector type: " + type);
         }
     }
 

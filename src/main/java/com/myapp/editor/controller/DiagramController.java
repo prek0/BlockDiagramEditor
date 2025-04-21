@@ -35,6 +35,9 @@ public class DiagramController {
     private DiagramElement copiedElement;
     private String text = "";
 
+    private String selectedConnectorType = "Association"; 
+
+
     public String getText() {
         return text;
     }
@@ -123,6 +126,14 @@ public class DiagramController {
         view.getEnumButton().addActionListener(e -> addElement("Enum"));
         view.getPackageButton().addActionListener(e -> addElement("packageBox"));
 
+        view.getAssociationButton().addActionListener(e -> setSelectedConnectorType("Association"));
+        view.getGeneralizationButton().addActionListener(e -> setSelectedConnectorType("Generalization"));
+        view.getRealizationButton().addActionListener(e ->  setSelectedConnectorType("Realization"));
+        view.getAggregationButton().addActionListener(e -> setSelectedConnectorType("Aggregation"));
+        view.getCompositionButton().addActionListener(e -> setSelectedConnectorType("Composition"));
+        view.getDashedLineButton().addActionListener(e -> setSelectedConnectorType("DashedLine"));
+
+
         // Handle the "Text" button click (Predefined text placement)
         view.getTextButton().addActionListener(e -> {
             // Prompt user for the text input
@@ -193,6 +204,12 @@ public class DiagramController {
         commandManager.executeCommand(moveCommand);
     }
 
+    public void addConnector(String connectorType, DiagramElement source, DiagramElement destination) {
+        Connector connector = elementFactory.createConnector(connectorType, source, destination);
+        Command addConnectorCommand = new AddConnectorCommand(model, connector, view);
+        commandManager.executeCommand(addConnectorCommand);
+    }
+
     public AddConnectorCommand createConnectorCommand(DiagramElement source, DiagramElement destination) {
         Connector connector = new Connector(source, destination);
         return new AddConnectorCommand(model, connector, view);
@@ -201,6 +218,14 @@ public class DiagramController {
     public void handleConnectorCreation(DiagramElement source, DiagramElement destination) {
         AddConnectorCommand cmd = createConnectorCommand(source, destination);
         commandManager.executeCommand(cmd); 
+    }
+
+    public void setSelectedConnectorType(String type) {
+        this.selectedConnectorType = type;
+    }
+    
+    public String getSelectedConnectorType() {
+        return selectedConnectorType;
     }
     
     
@@ -218,6 +243,8 @@ public class DiagramController {
 
         view.getDiagramPanel().repaint();
     }
+
+
 
     public void groupMoved(Map<DiagramElement, Point> originalPositions, Map<DiagramElement, Point> newPositions) {
         commandManager.executeCommand(new MoveGroupCommand(originalPositions, newPositions));

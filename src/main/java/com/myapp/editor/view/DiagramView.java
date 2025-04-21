@@ -12,8 +12,6 @@ public class DiagramView extends JPanel {
     private DiagramModel model;
     private JMenuItem saveMenuItem;
     private JMenuItem loadMenuItem;
-    private JMenuItem undoMenuItem;
-    private JMenuItem redoMenuItem;
     private DiagramPanel diagramPanel;
     private DiagramController controller;
 
@@ -52,7 +50,14 @@ public class DiagramView extends JPanel {
     private JButton packageButton;
 
     //connector 
-    private JButton connectorButton;  
+    private JPanel connectorPanel;
+    private JButton connectorButton; 
+    private JButton associationButton;
+    private JButton generalizationButton;
+    private JButton realizationButton;
+    private JButton aggregationButton;
+    private JButton compositionButton;
+    private JButton dashedLineButton; 
 
     public DiagramView(DiagramModel model) {
         this.model = model;
@@ -110,6 +115,7 @@ public class DiagramView extends JPanel {
         useCaseOptionsPanel.setVisible("Use Case Diagram".equals(selected));
         classDiagramOptionsPanel.setVisible("Class Diagram".equals(selected));
         stateDiagramOptionsPanel.setVisible("State Diagram".equals(selected));
+        connectorPanel.setVisible("Connector".equals(selected));
 
         revalidate();
         repaint();
@@ -152,10 +158,51 @@ public class DiagramView extends JPanel {
     stateDiagramOptionsPanel.setVisible(false);
     leftPanel.add(stateDiagramOptionsPanel);
 
+
     // -------- Connector Button --------
     connectorButton = new JButton("Connector");
     connectorButton.setAlignmentX(Component.LEFT_ALIGNMENT);
     leftPanel.add(connectorButton);
+
+    // -------- Connector Panel --------
+    connectorPanel = new JPanel();
+    connectorPanel.setLayout(new BoxLayout(connectorPanel, BoxLayout.Y_AXIS));
+    connectorPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
+    connectorPanel.setBorder(BorderFactory.createTitledBorder("Connectors"));
+
+    // Create connector buttons
+    associationButton = new JButton("Association");
+    generalizationButton = new JButton("Generalization");
+    realizationButton = new JButton("Realization");
+    aggregationButton = new JButton("Aggregation");
+    compositionButton = new JButton("Composition");
+    dashedLineButton = new JButton("Dashed Line");
+
+    // Add connector buttons to the panel
+    connectorPanel.add(associationButton);
+    connectorPanel.add(generalizationButton);
+    connectorPanel.add(realizationButton);
+    connectorPanel.add(aggregationButton);
+    connectorPanel.add(compositionButton);
+    connectorPanel.add(dashedLineButton);
+
+    // Set connectorPanel visibility to false initially
+    connectorPanel.setVisible(false);
+
+    // Add connectorPanel to leftPanel
+    leftPanel.add(connectorPanel);
+
+    // Toggle visibility of connectorPanel when connectorButton is clicked
+    connectorButton.addActionListener(e -> {
+        connectorPanel.setVisible(!connectorPanel.isVisible());
+        revalidate();
+        repaint();
+    });
+
+    // Make sure the leftPanel is added to the main layout
+    add(leftPanel, BorderLayout.WEST);
+
+
 
     // Show Use Case panel on model selection
     modelSelector.addActionListener(e -> {
@@ -297,6 +344,15 @@ public class DiagramView extends JPanel {
     public JButton getPackageButton() {
         return packageButton;
     }
+
+    //connectors
+    public JButton getAssociationButton() { return associationButton; }
+    public JButton getGeneralizationButton() { return generalizationButton; }
+    public JButton getRealizationButton() { return realizationButton; }
+    public JButton getAggregationButton() { return aggregationButton; }
+    public JButton getCompositionButton() { return compositionButton; }
+    public JButton getDashedLineButton() { return dashedLineButton; }
+
     
     public void setupKeyboardShortcuts(Action undoAction, Action redoAction, Action copyAction, Action pasteAction) {
         InputMap inputMap = diagramPanel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);

@@ -30,8 +30,6 @@ public class Connector implements Serializable {
             g.setColor(Color.BLACK);
             g.drawLine(x1, y1, x2, y2);
 
-            // Optional: draw arrowhead
-            drawArrow(g, x1, y1, x2, y2);
         }
     }
 
