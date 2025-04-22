@@ -121,7 +121,6 @@ public class DiagramController {
         view.getInterfaceButton().addActionListener(e -> addElement("InterfaceBox"));
         view.getAbstractClassButton().addActionListener(e -> addElement("AbstractBox"));
         view.getEnumButton().addActionListener(e -> addElement("Enum"));
-        view.getPackageButton().addActionListener(e -> addElement("packageBox"));
 
         view.getAssociationButton().addActionListener(e -> setSelectedConnectorType("Association"));
         view.getGeneralizationButton().addActionListener(e -> setSelectedConnectorType("Generalization"));

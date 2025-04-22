@@ -1,12 +1,30 @@
 package com.myapp.editor.view;
 
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
+import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.event.ActionListener;
+import java.awt.event.InputEvent;
+import java.awt.event.KeyEvent;
+
+import javax.swing.Action;
+import javax.swing.ActionMap;
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
+import javax.swing.InputMap;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JComponent;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JPanel;
+import javax.swing.KeyStroke;
 
 import com.myapp.editor.controller.DiagramController;
 import com.myapp.editor.controller.command.CommandManager;
-import com.myapp.editor.model.*;
+import com.myapp.editor.model.DiagramModel;
 
 public class DiagramView extends JPanel {
     private DiagramModel model;
@@ -131,13 +149,13 @@ public class DiagramView extends JPanel {
     interfaceButton = new JButton("Interface");
     abstractClassButton = new JButton("Abstract Class");
     enumButton = new JButton("Enum");
-    packageButton = new JButton("Package");
+    
 
     classDiagramOptionsPanel.add(classButton);
     classDiagramOptionsPanel.add(interfaceButton);
     classDiagramOptionsPanel.add(abstractClassButton);
     classDiagramOptionsPanel.add(enumButton);
-    classDiagramOptionsPanel.add(packageButton);
+    
 
     classDiagramOptionsPanel.setVisible(false);
     leftPanel.add(classDiagramOptionsPanel);
@@ -341,9 +359,7 @@ public class DiagramView extends JPanel {
         return enumButton;
     }
     
-    public JButton getPackageButton() {
-        return packageButton;
-    }
+    
 
     //connectors
     public JButton getAssociationButton() { return associationButton; }

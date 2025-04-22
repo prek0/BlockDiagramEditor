@@ -16,25 +16,40 @@ public class InterfaceBox extends DiagramElement {
 
     @Override
     public void draw(Graphics g) {
-        g.setColor(new Color(245, 245, 220));
+        // Background
+        g.setColor(Color.WHITE);
         g.fillRect(x, y, width, height);
+
+        // Border
         g.setColor(Color.BLACK);
         g.drawRect(x, y, width, height);
-        
+
+        // Header: <<interface>> and name
         Font original = g.getFont();
         Font italic = original.deriveFont(Font.ITALIC);
         g.setFont(italic);
         g.drawString("<<interface>>", x + 10, y + 20); 
         g.drawString(text, x + 10, y + 40); 
         g.setFont(original);
-    
+
+        // Section lines
+        int titleHeight = 50;
+        int middleLineY = y + titleHeight;
+        int bottomLineY = y + (height + titleHeight) / 2;
+
+        g.drawLine(x, middleLineY, x + width, middleLineY);       // Line below title
+        g.drawLine(x, bottomLineY, x + width, bottomLineY);       // Line below attributes
+
+        // Placeholder section text
+        g.drawString("", x + 10, middleLineY + 20);
+        g.drawString("", x + 10, bottomLineY + 20);
+
+        // Selection visual
         if (selected) {
             g.setColor(Color.RED);
             g.drawRect(x - 2, y - 2, width + 4, height + 4);
-            g.setColor(Color.BLACK);
-    
-            // Draw resize handle
-            g.setColor(Color.RED);
+
+            // Resize handle
             g.fillRect(x + width - 10, y + height - 10, 10, 10);
             g.setColor(Color.BLACK);
         }

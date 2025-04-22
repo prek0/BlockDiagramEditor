@@ -11,30 +11,47 @@ import com.myapp.editor.model.DiagramElement;
 public class EnumBox extends DiagramElement {
 
     public EnumBox(int x, int y, String text, int width, int height, int id) {
-        super(x, y, "Enum", width, height, id);
+        super(x, y, text, width, height, id);
     }
 
     @Override
     public void draw(Graphics g) {
-        g.setColor(new Color(245, 245, 220));
+        // Background
+        g.setColor(Color.WHITE);
         g.fillRect(x, y, width, height);
+
+        // Border
         g.setColor(Color.BLACK);
         g.drawRect(x, y, width, height);
-        
+
+        // Fonts
         Font original = g.getFont();
         Font italic = original.deriveFont(Font.ITALIC);
         g.setFont(italic);
+
+        // Header: <<enumeration>> and name
         g.drawString("<<enumeration>>", x + 10, y + 20); 
         g.drawString(text, x + 10, y + 40); 
         g.setFont(original);
-    
+
+        // Section lines
+        int titleHeight = 50;
+        int middleLineY = y + titleHeight;
+        int bottomLineY = y + (height + titleHeight) / 2;
+
+        g.drawLine(x, middleLineY, x + width, middleLineY);       // Line below title
+        g.drawLine(x, bottomLineY, x + width, bottomLineY);       // Line below values
+
+        // Placeholder section text
+        g.drawString("", x + 10, middleLineY + 20);
+        g.drawString("", x + 10, bottomLineY + 20);
+
+        // If selected
         if (selected) {
             g.setColor(Color.RED);
             g.drawRect(x - 2, y - 2, width + 4, height + 4);
-            g.setColor(Color.BLACK);
-    
-            // Draw resize handle
-            g.setColor(Color.RED);
+
+            // Resize handle
             g.fillRect(x + width - 10, y + height - 10, 10, 10);
             g.setColor(Color.BLACK);
         }

@@ -1,6 +1,19 @@
 package com.myapp.editor.controller;
 
-import com.myapp.editor.model.*;
+import com.myapp.editor.model.Connector;
+import com.myapp.editor.model.DiagramElement;
+import com.myapp.editor.model.DiagramModel;
+import com.myapp.editor.model.TextElement;
+import com.myapp.editor.model.classDia.AbstractClassBox;
+import com.myapp.editor.model.classDia.ClassBox;
+import com.myapp.editor.model.classDia.EnumBox;
+import com.myapp.editor.model.classDia.InterfaceBox;
+import com.myapp.editor.model.connector.AggregationConnector;
+import com.myapp.editor.model.connector.AssociationConnector;
+import com.myapp.editor.model.connector.CompositionConnector;
+import com.myapp.editor.model.connector.DashedLineConnector;
+import com.myapp.editor.model.connector.GeneralisationConnector;
+import com.myapp.editor.model.connector.RealisationConnector;
 import com.myapp.editor.model.general.CylinderElement;
 import com.myapp.editor.model.general.EllipseElement;
 import com.myapp.editor.model.general.HexagonElement;
@@ -11,16 +24,9 @@ import com.myapp.editor.model.state.DecisionStateElement;
 import com.myapp.editor.model.state.FinalStateElement;
 import com.myapp.editor.model.state.InitialStateElement;
 import com.myapp.editor.model.state.StateElement;
-import com.myapp.editor.model.usecase.UseCaseElement;
 import com.myapp.editor.model.usecase.ActorElement;
 import com.myapp.editor.model.usecase.SystemBoundary;
-import com.myapp.editor.model.connector.AggregationConnector;
-import com.myapp.editor.model.connector.AssociationConnector;
-import com.myapp.editor.model.connector.CompositionConnector;
-import com.myapp.editor.model.connector.DashedLineConnector;
-import com.myapp.editor.model.connector.GeneralisationConnector;
-import com.myapp.editor.model.connector.RealisationConnector;
-import com.myapp.editor.model.classDia.*;
+import com.myapp.editor.model.usecase.UseCaseElement;
 
 public class ElementFactory {
     private DiagramModel model;
@@ -60,8 +66,6 @@ public class ElementFactory {
                 return new AbstractClassBox(x, y, "Abstract", 150, 200, id);
             case "Enum":
                 return new EnumBox(x, y, "Enum", 150, 200, id);
-            case "packageBox":
-                return new PackageBox(x, y, "Package", 150, 200, id);
             case "InitialState":  
                 return new InitialStateElement(x, y, id);
             case "FinalState":    
